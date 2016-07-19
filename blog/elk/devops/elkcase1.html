@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/assets/ico/favicon.ico">
+
+    <title>TTPOC. - 大海撈針：使用ELK 做異常檢測</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/assets/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <!--<link rel="stylesheet" href="/css/main.css">-->
+
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+    <body>
+        <!-- Fixed navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">TTPOC.</a>
+    </div>
+    <div class="navbar-collapse collapse navbar-right">
+      <ul class="nav navbar-nav">
+        <li ><a href="/">HOME</a></li>
+        <li ><a href="/products/">PRODUCTS</a></li>
+        <li ><a href="/blog/">BLOG</a></li>
+        <li ><a href="/portfolio/">PORTFOLIO</a></li>
+        <li ><a href="/about/">ABOUT</a></li>
+        <li ><a href="/contact/">CONTACT</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+
+            <div id="blue">
+    <div class="container">
+        <div class="row">
+            <h3>大海撈針：使用ELK 做異常檢測</h3>
+        </div><!-- /row -->
+    </div> <!-- /container -->
+</div><!-- /blue -->
+
+
+
+<div class="container mtb">
+    <div class="row">
+        <! -- SINGLE POST -->
+        <div class="col-lg-8">
+            <! -- Blog Post  -->
+            <p><img class="img-responsive" src="/assets/img/blog/bomb.jpg"></p>
+            <a href="/blog/elk/devops/elkcase1"><h3 class="ctitle">大海撈針：使用ELK 做異常檢測</h3></a>
+            <p><csmall>Jul 1, 2016. | By: Polin</csmall></p>
+              
+            <p>##大海撈針：使用ELK 做異常檢測</p>
+
+<p><img src="http://logz.io/wp-content/uploads/2016/07/haystack.jpg" alt="logo" /></p>
+
+<p>下面的情況可能聽起來很熟悉。</p>
+
+<p>這是半夜。您的手機開始振動。在另一端，這是一個瘋狂的客戶（或老闆）抱怨，該網站已關閉。您進入危機模式，並啟動故障排除過程，其中涉及攝入大量咖啡因和 - 通常是 - 與正在解決的問題結束。</p>
+
+<p>有時，這種情況下可以通過使用正確的記錄和監測策略來避免。集中記錄，例如，是實現有用的策略，但並不好用。最大的挑戰，當然，是通過日誌數據的海量所有進入該系統，並確定相關性和異常篩選。</p>
+
+<p>其中之一是，ELK是如此受歡迎的原因是，它是流媒體大集合來自不同來源的數據，使用查詢和搜索識別的相關性，並創造豐富的可視化和在他們頂部監控儀表盤非常有用的工具。</p>
+
+<p>以下描述了一個簡單的工作流程，通過分析不同類型的日誌並發現它們之間的相關性來解決網站崩潰。要做到這一點，我們將使用企業級ELK - 但大部分所描述的步驟可以用開源ELK任何安裝完成。</p>
+
+<p>由一個基於Apache Web服務器和MySQL數據庫的簡單Web應用程序。在這種情況下，ELK 收集Apache日誌，數據庫日誌，並使用ELK性能代理服務器的性能指標。</p>
+
+<h3 id="section">危機處理過程</h3>
+<p>要啟動故障排除過程中，我們要訪問我們Kibana接口，並開始查詢Elasticsearch相關日誌信息。</p>
+
+<p>首先，我要設定時間框架，以“今天”讓所有最近發生的事件的概述所記錄：</p>
+
+<p><img src="http://logz.io/wp-content/uploads/2016/07/log-of-all-recent-events.png" alt="detail1" /></p>
+
+<p>在這種情況下，我可以看到這個時間範圍內超過60,000日誌消息。現在是時候嘗試在Kibana查詢Elasticsearch找到我們大海撈針。</p>
+
+<p>現在，因為我們正在調查一個網站的崩潰，一個良好的開端將是我們Apache日誌（你也可以在這裡閱讀更多有關使用ELK堆棧作為Apache日誌分析器）。具體來說，我們將使用字段級搜索查明Apache的錯誤信息：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>type:apache_access AND response:[500 TO *]
+</code></pre>
+</div>
+
+<p>這將返回的730與500及以上響應代碼Apache的錯誤列表：</p>
+
+<p><img src="http://logz.io/wp-content/uploads/2016/07/apache-error-codes-500-and-above.png" alt="elk2" /></p>
+
+<p>我們的範圍還是有點太大，能夠返回有用的信息。為了進一步縮小範圍，我將不得不更加具體和側重於504回复：</p>
+
+<p><img src="http://logz.io/wp-content/uploads/2016/07/apache-504-errors-1.png" alt="elk3" /></p>
+
+<p>此搜索結果中的事件明顯可見的峰值。為了進一步深入，我要去點擊bar，並添加“響應”，並在郵件列表“類型”字段，使活動更具可讀性的列表：</p>
+
+<p><img src="http://logz.io/wp-content/uploads/2016/07/apache-errors-with-response-type.png" alt="elk4" /></p>
+
+<p>如果我們選擇顯示日誌消息之一，我們將獲得該事件的詳細視圖 - 消息字段及其值的列表（選擇JSON選項卡，看到JSON格式的消息）</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+   </span><span class="nt">"_index"</span><span class="p">:</span><span class="w"> </span><span class="s2">"logz-xmywsrkbovjddxljvcahcxsrbifbccrh-160627_v1"</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"apache_access"</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AVWPKMnATxyubhgJppgh"</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"_score"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"_source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"request"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cart/go"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"agent"</span><span class="p">:</span><span class="w"> </span><span class="s2">"\"Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)\""</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"minor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"auth"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"ident"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"apache_access"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"major"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"clientip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"128.93.102.172"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"geoip"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+         </span><span class="nt">"timezone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Europe/Paris"</span><span class="p">,</span><span class="w">
+         </span><span class="nt">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"128.93.102.172"</span><span class="p">,</span><span class="w">
+         </span><span class="nt">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mi">46</span><span class="p">,</span><span class="w">
+         </span><span class="nt">"country_code2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FR"</span><span class="p">,</span><span class="w">
+         </span><span class="nt">"country_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"France"</span><span class="p">,</span><span class="w">
+         </span><span class="nt">"country_code3"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FRA"</span><span class="p">,</span><span class="w">
+         </span><span class="nt">"continent_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EU"</span><span class="p">,</span><span class="w">
+</span><span class="nt">"location"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="mi">46</span><span class="w">
+         </span><span class="p">],</span><span class="w">
+         </span><span class="nt">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nt">"os"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Other"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"verb"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GET"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"128.93.102.172 - - [27/Jun/2016:10:34:53 +0000] \"GET /cart/go HTTP/1.1\" 504 93 \"-\" \"Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)\""</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+         </span><span class="s2">"_logz_upload_8021"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"apache-geoip"</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nt">"referrer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"\"-\""</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"@timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-27T10:34:53.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="mi">504</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"bytes"</span><span class="p">:</span><span class="w"> </span><span class="mi">93</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Googlebot"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"os_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Other"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"httpversion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.1"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"device"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Spider"</span><span class="w">
+   </span><span class="p">},</span><span class="w">
+   </span><span class="nt">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"@timestamp"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+         </span><span class="mi">1467023693000</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+   </span><span class="p">},</span><span class="w">
+   </span><span class="nt">"highlight"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+ 
+</span><span class="s2">"@kibana-highlighted-field@apache_access@/kibana-highlighted-field@"</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+   </span><span class="p">},</span><span class="w">
+   </span><span class="nt">"sort"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="mi">1467023693000</span><span class="w">
+   </span><span class="p">]</span><span class="w">
+   </span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>但如何將這些信息變成可操作的東西？</p>
+
+<h2 id="section-1">查明原因</h2>
+
+<p>為了得到一個更寬廣的視角，並試圖了解是否有我們的Apache的錯誤和其他事件發生在環境之間的關係，讓我們的“縮小”，而我們登錄到麋鹿。</p>
+
+<p>要做到這一點，我們將使用一個非常有用的功能是特定於ELK - +/-按鈕即在每個日誌消息的右上角。這使您輕鬆顯示已採取了一秒，十秒鐘，三十秒或初步選定事件60秒內發生的其他事件的選項。 （如果您使用Kibana的開源版本，可以通過手動配置的時限做同樣的事情。）</p>
+
+<p>點擊+/-十秒移除我們用於查找Apache的504事件的搜索過濾器給我們的所有活動我們整個系統中來，並發生10秒鐘，然後和我們的504事件之後的聚合視圖：</p>
+
+<p><img src="http://logz.io/wp-content/uploads/2016/07/aggregated-logs-of-all-correlated-events.png" alt="elk5" /></p>
+
+<p>什麼突然變得可見的是，經過正確的Web應用程序交易錯誤正在記錄阿帕奇504響應。打開這些錯誤之一揭示了交易，因為與我們的後端連接超時而失敗：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+   </span><span class="nt">"_index"</span><span class="p">:</span><span class="w"> </span><span class="s2">"logz-xmywsrkbovjddxljvcahcxsrbifbccrh-160627_v1"</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"webapp-transaction"</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AVWPKMuFbofAsbciXwUI"</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"_score"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"_source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"transaction_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"25ce2a4f-3f3d-4666-9339-ca63597a8e30"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"latency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"403"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"return_message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Transaction Failed - Connection Timeout"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WebApp Transactions"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"webapp-transaction"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+         </span><span class="s2">"_logz_http_bulk_json_8070"</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nt">"@timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-27T10:35:03.000+00:00"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"return_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"617"</span><span class="w">
+   </span><span class="p">},</span><span class="w">
+   </span><span class="nt">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"@timestamp"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+         </span><span class="mi">1467023703000</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+   </span><span class="p">},</span><span class="w">
+   </span><span class="nt">"sort"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="mi">1467023703000</span><span class="w">
+   </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h2 id="section-2">啟動監控遊戲</h2>
+<p>已經成功地檢測出了異常，取得日誌之間的相關性，並troubleshooted的根本原因。好消息是，這是這一進程的努力的一部分。壞消息是，我們遠遠沒有完成。</p>
+
+<p>要密切關注這些事件，現在是時候設置一些監控圖。在ELK行話來說，這些都是Kibana可視化和儀表板。</p>
+
+<p>首先，我們要創建一個新的線條圖，顯示跨時間的webapp交易。要做到這一點，我們將使用“return_message”字段：</p>
+
+<p><img src="http://logz.io/wp-content/uploads/2016/07/webapp-transactions-over-time-log.png" alt="elk6" /></p>
+
+<p>下一步，我們將創建一個新的線條圖，顯示跨時間HTTP響應交易。要做到這一點，將使用“響應”字段：</p>
+
+<p><img src="http://logz.io/wp-content/uploads/2016/07/http-responses-over-time.png" alt="elk7" /></p>
+
+<p>最後但並非最不重要的，我們要創建另一個可視化顯示使用’cpu_blk_tot“字段跨時CPU使用率：</p>
+
+<p><img src="http://logz.io/wp-content/uploads/2016/07/cpu-usage-log.png" alt="elk7" /></p>
+
+<p>這三個可視化添加到一個單一的儀表板很容易地確定事件的相關性：</p>
+
+<p><img src="http://logz.io/wp-content/uploads/2016/07/event-log-correlations-dashboard.png" alt="elk8" /></p>
+
+<p>當然，這些只是如何可視日誌數據的幾個例子。您可以切片和切塊的數據，你想要的任何方式，這一切都取決於你正在監視哪些事件和環境的設立。</p>
+
+<h2 id="section-3">如何防止此類事件在將來發生？</h2>
+
+<p>有通常的DevOps工程師，以防止壞的代碼，開發者寫導致網站崩潰，沒有有效的方法。但是，有辦法讓DevOps的船員在他們的日誌策略更加積極主動，使他們能夠更迅速地找到事故的原因。</p>
+
+<p>例如，根據查詢創建警報將提醒您實時事件。作為一個例子，我將使用ELK 報警機制。如果您在使用自己的ELK，則需要配置自己的警報系統。</p>
+
+<p>首先，讓我們篩選Kibana顯示的事件列表中只顯示交易錯誤。要做到這一點，我們要點擊這個相鄰放大鏡圖標“return_message”字段：</p>
+
+<p><img src="http://logz.io/wp-content/uploads/2016/07/filter-list-of-log-events.png" alt="elk9" /></p>
+
+<p>此外，要更改時間框架回“今天得到了廣泛的角度來看：</p>
+
+<p><img src="http://logz.io/wp-content/uploads/2016/07/apache-504-errors-one-day.png" alt="elk10" /></p>
+
+<p>這有助於我們確定哪些可以被視為交易的錯誤的上下文中的“異常”。我們可以看到，每三十分鐘出現最多三個錯誤。此外，我們可以在我們的報導中墜毀看到35事件的一個高峰。</p>
+
+<p>在內置到ELK的UI界面Kibana，我要去點擊頂部右上角的“創建警報”按鈕：</p>
+
+<p><img src="http://logz.io/wp-content/uploads/2016/07/elk-stack-alert-setup.png" alt="elk11" /></p>
+
+<p>要監視的實際查詢在警報定義對話框自動輸入：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>return_message：“交易失敗 - 連接超時”
+</code></pre>
+</div>
+<p>這裡要輸入的其他字段為警報，閾值配置和觸發器定義（您想如何在觸發警報通知）的名稱和描述。</p>
+
+<p>對於本例中的門檻，我要配置ELK只要超過三個事件五分鐘的時間內發生給我通知。</p>
+
+<p>最後但並非最不重要的，我要配置警報給我通知通過電子郵件。其他可用的選項是使用網絡掛接，其接收通過郵件應用通知，如HipChat或懈怠。</p>
+
+<p>保存後，警報可以從“警報”選項卡中進行編輯和管理。您也可以創建一個Kibana可視化，顯示您正在觸發各種ELK警報。</p>
+
+<p>要做到這一點，我將使用下面的查詢來搜索警報：
+接下來，我添加了“警報的描述”和“警報標題”來獲得被記錄一些可視性警示：</p>
+
+<p><img src="http://logz.io/wp-content/uploads/2016/07/search-alert-logs.png" alt="elk12" /></p>
+
+<p>使用這個搜索，我要創建一個新的柱狀圖可視化顯示我正在ELKo隨著時間的推移觸發不同的警報：</p>
+
+<p><img src="http://logz.io/wp-content/uploads/2016/07/count-of-alerts-being-triggered.png" alt="elk13" /></p>
+
+<h3 id="section-4">最後需要說明</h3>
+<p>找到一本書在圖書館不知道標題和作者名字是不可能的。在日誌分析的領域，ELK，使這項工作更容易憑藉其強大的查詢功能。儘管如此 - 確定在大型數據集的異常現象仍然是DevOps一個真正的障礙。</p>
+
+
+            <div class="spacing"></div>
+            <!-- <h6>SHARE:</h6>
+            <p class="share">
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-tumblr"></i></a>
+                <a href="#"><i class="fa fa-google-plus"></i></a>		 		
+            </p> -->
+        </div><! --/col-lg-8 -->
+        
+        <div class="col-lg-3">
+   <!--  <h4>Search</h4>
+    <div class="hline"></div>
+        <p>
+            <br/>
+            <input type="text" class="form-control" placeholder="Search something">
+        </p>
+    <div class="spacing"></div> -->
+    <h4>Subscribe</h4>
+    <div class="hline"></div>
+        <p>
+            <p class="rss-subscribe">Subscribe to this blog <a href="/feed.xml">via RSS</a>.</p>
+        </p>
+    <div class="spacing"></div>
+    <h4>Categories</h4>
+    <div class="hline"></div>
+    
+        <p>
+            <a href="/category/#Tips&Tricks"><i class="fa fa-angle-right"></i> Tips&tricks</a>
+            <span class="badge badge-theme pull-right">1</span>
+        </p>
+    
+        <p>
+            <a href="/category/#Code-Snippets"><i class="fa fa-angle-right"></i> Code-snippets</a>
+            <span class="badge badge-theme pull-right">1</span>
+        </p>
+    
+        <p>
+            <a href="/category/#Web-Design"><i class="fa fa-angle-right"></i> Web-design</a>
+            <span class="badge badge-theme pull-right">1</span>
+        </p>
+    
+        <p>
+            <a href="/category/#Development"><i class="fa fa-angle-right"></i> Development</a>
+            <span class="badge badge-theme pull-right">1</span>
+        </p>
+    
+        <p>
+            <a href="/category/#ELK"><i class="fa fa-angle-right"></i> Elk</a>
+            <span class="badge badge-theme pull-right">16</span>
+        </p>
+    
+        <p>
+            <a href="/category/#DevOps"><i class="fa fa-angle-right"></i> Devops</a>
+            <span class="badge badge-theme pull-right">15</span>
+        </p>
+    
+        <p>
+            <a href="/category/#iPOC"><i class="fa fa-angle-right"></i> Ipoc</a>
+            <span class="badge badge-theme pull-right">1</span>
+        </p>
+    
+        <p>
+            <a href="/category/#NMON"><i class="fa fa-angle-right"></i> Nmon</a>
+            <span class="badge badge-theme pull-right">3</span>
+        </p>
+    
+        <p>
+            <a href="/category/#DEVOPS"><i class="fa fa-angle-right"></i> Devops</a>
+            <span class="badge badge-theme pull-right">1</span>
+        </p>
+    
+
+    <div class="spacing"></div>
+
+    <h4>Recent Posts</h4>
+    <div class="hline"></div>
+        <ul class="popular-posts">
+             
+                <li>
+                    <a href="/blog/elk/nmon/elktop10"><img src="/assets/img/blog/thumbs/thumb02.jpg" alt="Popular Post"></a>
+                    <p><a href="/blog/elk/nmon/elktop10">Top 10 reason for ELK</a></p>
+                <em>Posted on 10 Jul 2016</em>
+            </li>
+             
+                <li>
+                    <a href="/blog/elk/devops/devopsKKK"><img src="/assets/img/blog/thumbs/thumb01.jpg" alt="Popular Post"></a>
+                    <p><a href="/blog/elk/devops/devopsKKK">NMONS iPOC 維運分析評估改</a></p>
+                <em>Posted on 02 Jul 2016</em>
+            </li>
+             
+                <li>
+                    <a href="/blog/elk/devops/elkplusdevops"><img src="/assets/img/blog/thumbs/thumb01.jpg" alt="Popular Post"></a>
+                    <p><a href="/blog/elk/devops/elkplusdevops">DevOps for ELK</a></p>
+                <em>Posted on 01 Jul 2016</em>
+            </li>
+             
+                <li>
+                    <a href="/blog/elk/devops/elkcase1"><img src="/assets/img/blog/thumbs/thumb01.jpg" alt="Popular Post"></a>
+                    <p><a href="/blog/elk/devops/elkcase1">大海撈針：使用ELK 做異常檢測</a></p>
+                <em>Posted on 01 Jul 2016</em>
+            </li>
+             
+        </ul>
+
+    <div class="spacing"></div>
+
+    <h4>Popular Tags</h4>
+    <div class="hline"></div>
+    <p>
+    
+            <a class="btn btn-theme" href="/category/#Tips&Tricks" role="button">Tips&tricks (1)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#Code-Snippets" role="button">Code-snippets (1)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#Web-Design" role="button">Web-design (1)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#Development" role="button">Development (1)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#ELK" role="button">Elk (16)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#DevOps" role="button">Devops (15)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#iPOC" role="button">Ipoc (1)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#NMON" role="button">Nmon (3)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#DEVOPS" role="button">Devops (1)</a>	         
+        
+    </p>
+</div>
+
+
+    </div><! --/row -->
+</div><! --/container -->
+
+        <div id="footerwrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <h4>About</h4>
+                <div class="hline-w"></div>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+            </div>
+            <div class="col-lg-4">
+                <h4>Social Links</h4>
+                <div class="hline-w"></div>
+                <p>
+                    
+                        <a href="" class="btn-social btn-outline"><i class="fa fa-dribbble"></i></a>
+                    
+                        <a href="" class="btn-social btn-outline"><i class="fa fa-facebook"></i></a>
+                    
+                        <a href="" class="btn-social btn-outline"><i class="fa fa-twitter"></i></a>
+                    
+                        <a href="" class="btn-social btn-outline"><i class="fa fa-instagram"></i></a>
+                    
+                        <a href="" class="btn-social btn-outline"><i class="fa fa-tumblr"></i></a>
+                    
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <h4>Our Bunker</h4>
+                <div class="hline-w"></div>
+                <p>
+                    
+                        Some Ave, 987, <br>
+                    
+                        23890, New York, <br>
+                    
+                        United States. <br>
+                    
+                </p>
+            </div>
+        </div><! --/row -->
+    </div><! --/container -->
+</div><! --/footerwrap -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+<script src="/assets/js/retina-1.1.0.js"></script>
+<script src="/assets/js/jquery.hoverdir.js"></script>
+<script src="/assets/js/jquery.hoverex.min.js"></script>
+<script src="/assets/js/jquery.prettyPhoto.js"></script>
+<script src="/assets/js/jquery.isotope.min.js"></script>
+<script src="/assets/js/custom.js"></script>
+
+<script>
+// Portfolio
+(function($) {
+	"use strict";
+	var $container = $('.portfolio'),
+		$items = $container.find('.portfolio-item'),
+		portfolioLayout = 'fitRows';
+		
+		if( $container.hasClass('portfolio-centered') ) {
+			portfolioLayout = 'masonry';
+		}
+				
+		$container.isotope({
+			filter: '*',
+			animationEngine: 'best-available',
+			layoutMode: portfolioLayout,
+			animationOptions: {
+			duration: 750,
+			easing: 'linear',
+			queue: false
+		},
+		masonry: {
+		}
+		}, refreshWaypoints());
+		
+		function refreshWaypoints() {
+			setTimeout(function() {
+			}, 1000);   
+		}
+				
+		$('nav.portfolio-filter ul a').on('click', function() {
+				var selector = $(this).attr('data-filter');
+				$container.isotope({ filter: selector }, refreshWaypoints());
+				$('nav.portfolio-filter ul a').removeClass('active');
+				$(this).addClass('active');
+				return false;
+		});
+		
+		function getColumnNumber() { 
+			var winWidth = $(window).width(), 
+			columnNumber = 1;
+		
+			if (winWidth > 1200) {
+				columnNumber = 5;
+			} else if (winWidth > 950) {
+				columnNumber = 4;
+			} else if (winWidth > 600) {
+				columnNumber = 3;
+			} else if (winWidth > 400) {
+				columnNumber = 2;
+			} else if (winWidth > 250) {
+				columnNumber = 1;
+			}
+				return columnNumber;
+			}       
+			
+			function setColumns() {
+				var winWidth = $(window).width(), 
+				columnNumber = getColumnNumber(), 
+				itemWidth = Math.floor(winWidth / columnNumber);
+				
+				$container.find('.portfolio-item').each(function() { 
+					$(this).css( { 
+					width : itemWidth + 'px' 
+				});
+			});
+		}
+		
+		function setPortfolio() { 
+			setColumns();
+			$container.isotope('reLayout');
+		}
+			
+		$container.imagesLoaded(function () { 
+			setPortfolio();
+		});
+		
+		$(window).on('resize', function () { 
+		setPortfolio();          
+	});
+})(jQuery);
+</script>
+    </body>
+</html>

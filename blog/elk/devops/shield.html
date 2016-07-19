@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/assets/ico/favicon.ico">
+
+    <title>TTPOC. - Shield 簡介</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/assets/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <!--<link rel="stylesheet" href="/css/main.css">-->
+
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+    <body>
+        <!-- Fixed navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">TTPOC.</a>
+    </div>
+    <div class="navbar-collapse collapse navbar-right">
+      <ul class="nav navbar-nav">
+        <li ><a href="/">HOME</a></li>
+        <li ><a href="/products/">PRODUCTS</a></li>
+        <li ><a href="/blog/">BLOG</a></li>
+        <li ><a href="/portfolio/">PORTFOLIO</a></li>
+        <li ><a href="/about/">ABOUT</a></li>
+        <li ><a href="/contact/">CONTACT</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+
+            <div id="blue">
+    <div class="container">
+        <div class="row">
+            <h3>Shield 簡介</h3>
+        </div><!-- /row -->
+    </div> <!-- /container -->
+</div><!-- /blue -->
+
+
+
+<div class="container mtb">
+    <div class="row">
+        <! -- SINGLE POST -->
+        <div class="col-lg-8">
+            <! -- Blog Post  -->
+            <p><img class="img-responsive" src="/assets/img/blog/bomb.jpg"></p>
+            <a href="/blog/elk/devops/shield"><h3 class="ctitle">Shield 簡介</h3></a>
+            <p><csmall>Jul 1, 2016. | By: Polin</csmall></p>
+              
+            <p>##Elasticsearch的安全機制
+- 利用Shield保護數據</p>
+
+<p>隨著快速採用Elasticsearch，這是比以往更容易存儲，搜索和分析數據。shields可以讓你輕鬆地保護這些數據用一個用戶名和密碼，同時簡化您的架構。例如加密，基於角色的訪問控制，IP過濾和審計先進的安全功能也可當你需要他們。</p>
+
+<p><img src="https://static-www.elastic.co/assets/blt83966820b2eef517/shield-triad.png?q=635" alt="logo" /></p>
+
+<h2 id="shields-">shields 新功能</h2>
+<p>shields 現在包括Kibana插件，設有登陸界面和會話支持為整個堆疊彈性的安全。最近的顯著特點還包括一個配置API，現場和文檔級安全性和可擴展的框架領域實現自定義集成。</p>
+
+<h3 id="elasticsearch">驗證：保護Elasticsearch用用戶名和密碼</h3>
+<p>您的數據是企業的命脈;保護它無意修改或未經授權的訪問是當務之急。盾可以很容易地密碼保護您的Elasticsearch集群。 Active Directory和LDAP的支持是包括在內。</p>
+
+<h3 id="kibana">登錄和Kibana會話管理</h3>
+<p>盾包含Kibana插件，提供用戶身份驗證和會話的支持，使得它比以往任何時候都充分保護Kibana容易。</p>
+
+<h3 id="section">簡化您的集成防護體系</h3>
+<p>避免建設，維護和測試一個外部的安全解決方案。盾緊密集成Elasticsearch，驗證每一個請求，並在不犧牲安全性，提供最佳的性能。你的時間應該花在構建應用程序或分析你的數據，不必擔心安全性。</p>
+
+<h3 id="section-1">基於角色的訪問控制：給正確的訪問給合適的人</h3>
+<p>盾，可以配置誰可以在Elasticsearch集群內做什麼。創建用於IT /運營團隊，可以看到群集運行狀況，但不能訪問任何數據監控賬戶。授予只讀訪問您的Kibana用戶，甚至只對特定的索引授權訪問支持多租戶。</p>
+
+<h3 id="section-2">現場和文檔級安全性</h3>
+<p>獲取顆粒與Elasticsearch您的基於角色的訪問控制。盾可以限制訪問在Elasticsearch各個字段，並阻止用戶訪問與真正的文檔級安全敏感文件。</p>
+
+<h3 id="ip">加密通信和IP過濾：保護線路上您的數據</h3>
+<p>SSL / TLS加密是保護你的數據在飛行的最佳途徑。盾可以很容易地防止窺探或通過加密節點到節點和客戶端通信篡改。盾也可以阻止未經批准的主機從加入或使用IP過濾與群集進行通信。</p>
+
+<h3 id="elasticsearch-1">審計日誌記錄：跟踪所有試圖訪問Elasticsearch</h3>
+<p>盾可以幫助你達到並超過了各種安全規定和要求。無論是HIPAA，PCI DSS，FISMA，ISO，或者你的內部政策，盾有你覆蓋了所有的系統和用戶活動的完整記錄。</p>
+
+
+
+            <div class="spacing"></div>
+            <!-- <h6>SHARE:</h6>
+            <p class="share">
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-tumblr"></i></a>
+                <a href="#"><i class="fa fa-google-plus"></i></a>		 		
+            </p> -->
+        </div><! --/col-lg-8 -->
+        
+        <div class="col-lg-3">
+   <!--  <h4>Search</h4>
+    <div class="hline"></div>
+        <p>
+            <br/>
+            <input type="text" class="form-control" placeholder="Search something">
+        </p>
+    <div class="spacing"></div> -->
+    <h4>Subscribe</h4>
+    <div class="hline"></div>
+        <p>
+            <p class="rss-subscribe">Subscribe to this blog <a href="/feed.xml">via RSS</a>.</p>
+        </p>
+    <div class="spacing"></div>
+    <h4>Categories</h4>
+    <div class="hline"></div>
+    
+        <p>
+            <a href="/category/#Tips&Tricks"><i class="fa fa-angle-right"></i> Tips&tricks</a>
+            <span class="badge badge-theme pull-right">1</span>
+        </p>
+    
+        <p>
+            <a href="/category/#Code-Snippets"><i class="fa fa-angle-right"></i> Code-snippets</a>
+            <span class="badge badge-theme pull-right">1</span>
+        </p>
+    
+        <p>
+            <a href="/category/#Web-Design"><i class="fa fa-angle-right"></i> Web-design</a>
+            <span class="badge badge-theme pull-right">1</span>
+        </p>
+    
+        <p>
+            <a href="/category/#Development"><i class="fa fa-angle-right"></i> Development</a>
+            <span class="badge badge-theme pull-right">1</span>
+        </p>
+    
+        <p>
+            <a href="/category/#ELK"><i class="fa fa-angle-right"></i> Elk</a>
+            <span class="badge badge-theme pull-right">16</span>
+        </p>
+    
+        <p>
+            <a href="/category/#DevOps"><i class="fa fa-angle-right"></i> Devops</a>
+            <span class="badge badge-theme pull-right">15</span>
+        </p>
+    
+        <p>
+            <a href="/category/#iPOC"><i class="fa fa-angle-right"></i> Ipoc</a>
+            <span class="badge badge-theme pull-right">1</span>
+        </p>
+    
+        <p>
+            <a href="/category/#NMON"><i class="fa fa-angle-right"></i> Nmon</a>
+            <span class="badge badge-theme pull-right">3</span>
+        </p>
+    
+        <p>
+            <a href="/category/#DEVOPS"><i class="fa fa-angle-right"></i> Devops</a>
+            <span class="badge badge-theme pull-right">1</span>
+        </p>
+    
+
+    <div class="spacing"></div>
+
+    <h4>Recent Posts</h4>
+    <div class="hline"></div>
+        <ul class="popular-posts">
+             
+                <li>
+                    <a href="/blog/elk/nmon/elktop10"><img src="/assets/img/blog/thumbs/thumb02.jpg" alt="Popular Post"></a>
+                    <p><a href="/blog/elk/nmon/elktop10">Top 10 reason for ELK</a></p>
+                <em>Posted on 10 Jul 2016</em>
+            </li>
+             
+                <li>
+                    <a href="/blog/elk/devops/devopsKKK"><img src="/assets/img/blog/thumbs/thumb01.jpg" alt="Popular Post"></a>
+                    <p><a href="/blog/elk/devops/devopsKKK">NMONS iPOC 維運分析評估改</a></p>
+                <em>Posted on 02 Jul 2016</em>
+            </li>
+             
+                <li>
+                    <a href="/blog/elk/devops/elkplusdevops"><img src="/assets/img/blog/thumbs/thumb01.jpg" alt="Popular Post"></a>
+                    <p><a href="/blog/elk/devops/elkplusdevops">DevOps for ELK</a></p>
+                <em>Posted on 01 Jul 2016</em>
+            </li>
+             
+                <li>
+                    <a href="/blog/elk/devops/elkcase1"><img src="/assets/img/blog/thumbs/thumb01.jpg" alt="Popular Post"></a>
+                    <p><a href="/blog/elk/devops/elkcase1">大海撈針：使用ELK 做異常檢測</a></p>
+                <em>Posted on 01 Jul 2016</em>
+            </li>
+             
+        </ul>
+
+    <div class="spacing"></div>
+
+    <h4>Popular Tags</h4>
+    <div class="hline"></div>
+    <p>
+    
+            <a class="btn btn-theme" href="/category/#Tips&Tricks" role="button">Tips&tricks (1)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#Code-Snippets" role="button">Code-snippets (1)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#Web-Design" role="button">Web-design (1)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#Development" role="button">Development (1)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#ELK" role="button">Elk (16)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#DevOps" role="button">Devops (15)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#iPOC" role="button">Ipoc (1)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#NMON" role="button">Nmon (3)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#DEVOPS" role="button">Devops (1)</a>	         
+        
+    </p>
+</div>
+
+
+    </div><! --/row -->
+</div><! --/container -->
+
+        <div id="footerwrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <h4>About</h4>
+                <div class="hline-w"></div>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+            </div>
+            <div class="col-lg-4">
+                <h4>Social Links</h4>
+                <div class="hline-w"></div>
+                <p>
+                    
+                        <a href="" class="btn-social btn-outline"><i class="fa fa-dribbble"></i></a>
+                    
+                        <a href="" class="btn-social btn-outline"><i class="fa fa-facebook"></i></a>
+                    
+                        <a href="" class="btn-social btn-outline"><i class="fa fa-twitter"></i></a>
+                    
+                        <a href="" class="btn-social btn-outline"><i class="fa fa-instagram"></i></a>
+                    
+                        <a href="" class="btn-social btn-outline"><i class="fa fa-tumblr"></i></a>
+                    
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <h4>Our Bunker</h4>
+                <div class="hline-w"></div>
+                <p>
+                    
+                        Some Ave, 987, <br>
+                    
+                        23890, New York, <br>
+                    
+                        United States. <br>
+                    
+                </p>
+            </div>
+        </div><! --/row -->
+    </div><! --/container -->
+</div><! --/footerwrap -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+<script src="/assets/js/retina-1.1.0.js"></script>
+<script src="/assets/js/jquery.hoverdir.js"></script>
+<script src="/assets/js/jquery.hoverex.min.js"></script>
+<script src="/assets/js/jquery.prettyPhoto.js"></script>
+<script src="/assets/js/jquery.isotope.min.js"></script>
+<script src="/assets/js/custom.js"></script>
+
+<script>
+// Portfolio
+(function($) {
+	"use strict";
+	var $container = $('.portfolio'),
+		$items = $container.find('.portfolio-item'),
+		portfolioLayout = 'fitRows';
+		
+		if( $container.hasClass('portfolio-centered') ) {
+			portfolioLayout = 'masonry';
+		}
+				
+		$container.isotope({
+			filter: '*',
+			animationEngine: 'best-available',
+			layoutMode: portfolioLayout,
+			animationOptions: {
+			duration: 750,
+			easing: 'linear',
+			queue: false
+		},
+		masonry: {
+		}
+		}, refreshWaypoints());
+		
+		function refreshWaypoints() {
+			setTimeout(function() {
+			}, 1000);   
+		}
+				
+		$('nav.portfolio-filter ul a').on('click', function() {
+				var selector = $(this).attr('data-filter');
+				$container.isotope({ filter: selector }, refreshWaypoints());
+				$('nav.portfolio-filter ul a').removeClass('active');
+				$(this).addClass('active');
+				return false;
+		});
+		
+		function getColumnNumber() { 
+			var winWidth = $(window).width(), 
+			columnNumber = 1;
+		
+			if (winWidth > 1200) {
+				columnNumber = 5;
+			} else if (winWidth > 950) {
+				columnNumber = 4;
+			} else if (winWidth > 600) {
+				columnNumber = 3;
+			} else if (winWidth > 400) {
+				columnNumber = 2;
+			} else if (winWidth > 250) {
+				columnNumber = 1;
+			}
+				return columnNumber;
+			}       
+			
+			function setColumns() {
+				var winWidth = $(window).width(), 
+				columnNumber = getColumnNumber(), 
+				itemWidth = Math.floor(winWidth / columnNumber);
+				
+				$container.find('.portfolio-item').each(function() { 
+					$(this).css( { 
+					width : itemWidth + 'px' 
+				});
+			});
+		}
+		
+		function setPortfolio() { 
+			setColumns();
+			$container.isotope('reLayout');
+		}
+			
+		$container.imagesLoaded(function () { 
+			setPortfolio();
+		});
+		
+		$(window).on('resize', function () { 
+		setPortfolio();          
+	});
+})(jQuery);
+</script>
+    </body>
+</html>

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/assets/ico/favicon.ico">
+
+    <title>TTPOC. - Top 10 reason for ELK</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/assets/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <!--<link rel="stylesheet" href="/css/main.css">-->
+
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+    <body>
+        <!-- Fixed navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">TTPOC.</a>
+    </div>
+    <div class="navbar-collapse collapse navbar-right">
+      <ul class="nav navbar-nav">
+        <li ><a href="/">HOME</a></li>
+        <li ><a href="/products/">PRODUCTS</a></li>
+        <li ><a href="/blog/">BLOG</a></li>
+        <li ><a href="/portfolio/">PORTFOLIO</a></li>
+        <li ><a href="/about/">ABOUT</a></li>
+        <li ><a href="/contact/">CONTACT</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+
+            <div id="blue">
+    <div class="container">
+        <div class="row">
+            <h3>Top 10 reason for ELK</h3>
+        </div><!-- /row -->
+    </div> <!-- /container -->
+</div><!-- /blue -->
+
+
+
+<div class="container mtb">
+    <div class="row">
+        <! -- SINGLE POST -->
+        <div class="col-lg-8">
+            <! -- Blog Post  -->
+            <p><img class="img-responsive" src="/assets/img/blog/bomb.jpg"></p>
+            <a href="/blog/elk/nmon/elktop10"><h3 class="ctitle">Top 10 reason for ELK</h3></a>
+            <p><csmall>Jul 10, 2016. | By: Polin</csmall></p>
+              
+            <p><img src="http://logz.io/wp-content/uploads/2016/06/elastic.png" alt="" /></p>
+
+<p>Getting acquainted with ELK lingo is one of the first things you’re going to have to do when starting out with the stack. Just like with any programming language, there are some basic concepts that once internalized, make the learning curve less traumatic.</p>
+
+<p>We’ve put together ten of the most important concepts you’re going to want to understand. While the concepts apply specifically to Elasticsearch, they are also are important to understand when operating the stack as a whole. When applicable — and to make it easier to understand — we will compare concepts to parallel terms in the world of relational databases.</p>
+
+<h2 id="fields">1. Fields</h2>
+
+<p>Fields are the smallest individual unit of data in Elasticsearch. Each field has a defined type and contains a single piece of data that can be, for example, a boolean, string or array expression. A collection of fields are together a single Elasticsearch document.</p>
+
+<p><br /></p>
+
+<p>Starting with Elasticsearch version 2.X, field names cannot start with special characters and cannot contain dots.</p>
+
+<h2 id="documents">2. Documents</h2>
+<p>Documents are JSON objects that are stored within an Elasticsearch index and are considered the base unit of storage. In the world of relational databases, documents can be compared to a row in table.</p>
+
+<p>For example, let’s assume that you are running an e-commerce application. You could have one document per product or one document per order. There is no limit to how many documents you can store in a particular index.</p>
+
+<p>Data in documents is defined with fields comprised of keys and values. A key is the name of the field, and a value can be an item of many different types such as a string, a number, a boolean expression, another object, or an array of values.</p>
+
+<p>Documents also contain reserved fields that constitute the document metadata such as:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>* _index – the index where the document resides
+* _type – the type that the document represents
+* _id – the unique identifier for the document
+</code></pre>
+</div>
+
+<p>An example of a document:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="p">{</span>
+   <span class="s2">"_id"</span><span class="err">:</span> <span class="mi">3</span><span class="p">,</span>
+   <span class="err">“</span><span class="nx">_type</span><span class="err">”:</span> <span class="p">[</span><span class="err">“</span><span class="nx">user</span><span class="err">”</span><span class="p">],</span>
+   <span class="s2">"age"</span><span class="err">:</span> <span class="mi">28</span><span class="p">,</span>
+   <span class="s2">"name"</span><span class="err">:</span> <span class="p">[</span><span class="s2">"daniel”],
+   "</span><span class="nx">year</span><span class="err">":</span><span class="mi">1989</span><span class="p">,</span>
+<span class="p">}</span></code></pre></figure>
+
+<h2 id="types">3. Types</h2>
+<p>Elasticsearch types are used within documents to subdivide similar types of data wherein each type represents a unique class of documents. Types consist of a name and a mapping (see below) and are used by adding the _type field. This field can then be used for filtering when querying a specific type.</p>
+
+<p>An index can have any number of types, and you can store documents belonging to these types in the same index.</p>
+
+<h2 id="mapping">4. Mapping</h2>
+<p>Like a schema in the world of relational databases, mapping defines the different types that reside within an index. It defines the fields for documents of a specific type — the data type (such as string and integer) and how the fields should be indexed and stored in Elasticsearch.</p>
+
+<p>A mapping can be defined explicitly or generated automatically when a document is indexed using templates. (Templates include settings and mappings that can be applied automatically to a new index.)</p>
+
+<p><img src="http://logz.io/blog/10-elasticsearch-concepts/?utm_source=facebook&amp;utm_medium=social&amp;utm_content=10_elasticsearch_concepts&amp;utm_campaign=blog_post" alt="logz.io" /></p>
+
+
+            <div class="spacing"></div>
+            <!-- <h6>SHARE:</h6>
+            <p class="share">
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-tumblr"></i></a>
+                <a href="#"><i class="fa fa-google-plus"></i></a>		 		
+            </p> -->
+        </div><! --/col-lg-8 -->
+        
+        <div class="col-lg-3">
+   <!--  <h4>Search</h4>
+    <div class="hline"></div>
+        <p>
+            <br/>
+            <input type="text" class="form-control" placeholder="Search something">
+        </p>
+    <div class="spacing"></div> -->
+    <h4>Subscribe</h4>
+    <div class="hline"></div>
+        <p>
+            <p class="rss-subscribe">Subscribe to this blog <a href="/feed.xml">via RSS</a>.</p>
+        </p>
+    <div class="spacing"></div>
+    <h4>Categories</h4>
+    <div class="hline"></div>
+    
+        <p>
+            <a href="/category/#Tips&Tricks"><i class="fa fa-angle-right"></i> Tips&tricks</a>
+            <span class="badge badge-theme pull-right">1</span>
+        </p>
+    
+        <p>
+            <a href="/category/#Code-Snippets"><i class="fa fa-angle-right"></i> Code-snippets</a>
+            <span class="badge badge-theme pull-right">1</span>
+        </p>
+    
+        <p>
+            <a href="/category/#Web-Design"><i class="fa fa-angle-right"></i> Web-design</a>
+            <span class="badge badge-theme pull-right">1</span>
+        </p>
+    
+        <p>
+            <a href="/category/#Development"><i class="fa fa-angle-right"></i> Development</a>
+            <span class="badge badge-theme pull-right">1</span>
+        </p>
+    
+        <p>
+            <a href="/category/#ELK"><i class="fa fa-angle-right"></i> Elk</a>
+            <span class="badge badge-theme pull-right">16</span>
+        </p>
+    
+        <p>
+            <a href="/category/#DevOps"><i class="fa fa-angle-right"></i> Devops</a>
+            <span class="badge badge-theme pull-right">15</span>
+        </p>
+    
+        <p>
+            <a href="/category/#iPOC"><i class="fa fa-angle-right"></i> Ipoc</a>
+            <span class="badge badge-theme pull-right">1</span>
+        </p>
+    
+        <p>
+            <a href="/category/#NMON"><i class="fa fa-angle-right"></i> Nmon</a>
+            <span class="badge badge-theme pull-right">3</span>
+        </p>
+    
+        <p>
+            <a href="/category/#DEVOPS"><i class="fa fa-angle-right"></i> Devops</a>
+            <span class="badge badge-theme pull-right">1</span>
+        </p>
+    
+
+    <div class="spacing"></div>
+
+    <h4>Recent Posts</h4>
+    <div class="hline"></div>
+        <ul class="popular-posts">
+             
+                <li>
+                    <a href="/blog/elk/nmon/elktop10"><img src="/assets/img/blog/thumbs/thumb02.jpg" alt="Popular Post"></a>
+                    <p><a href="/blog/elk/nmon/elktop10">Top 10 reason for ELK</a></p>
+                <em>Posted on 10 Jul 2016</em>
+            </li>
+             
+                <li>
+                    <a href="/blog/elk/devops/devopsKKK"><img src="/assets/img/blog/thumbs/thumb01.jpg" alt="Popular Post"></a>
+                    <p><a href="/blog/elk/devops/devopsKKK">NMONS iPOC 維運分析評估改</a></p>
+                <em>Posted on 02 Jul 2016</em>
+            </li>
+             
+                <li>
+                    <a href="/blog/elk/devops/elkplusdevops"><img src="/assets/img/blog/thumbs/thumb01.jpg" alt="Popular Post"></a>
+                    <p><a href="/blog/elk/devops/elkplusdevops">DevOps for ELK</a></p>
+                <em>Posted on 01 Jul 2016</em>
+            </li>
+             
+                <li>
+                    <a href="/blog/elk/devops/elkcase1"><img src="/assets/img/blog/thumbs/thumb01.jpg" alt="Popular Post"></a>
+                    <p><a href="/blog/elk/devops/elkcase1">大海撈針：使用ELK 做異常檢測</a></p>
+                <em>Posted on 01 Jul 2016</em>
+            </li>
+             
+        </ul>
+
+    <div class="spacing"></div>
+
+    <h4>Popular Tags</h4>
+    <div class="hline"></div>
+    <p>
+    
+            <a class="btn btn-theme" href="/category/#Tips&Tricks" role="button">Tips&tricks (1)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#Code-Snippets" role="button">Code-snippets (1)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#Web-Design" role="button">Web-design (1)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#Development" role="button">Development (1)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#ELK" role="button">Elk (16)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#DevOps" role="button">Devops (15)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#iPOC" role="button">Ipoc (1)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#NMON" role="button">Nmon (3)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#DEVOPS" role="button">Devops (1)</a>	         
+        
+    </p>
+</div>
+
+
+    </div><! --/row -->
+</div><! --/container -->
+
+        <div id="footerwrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <h4>About</h4>
+                <div class="hline-w"></div>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+            </div>
+            <div class="col-lg-4">
+                <h4>Social Links</h4>
+                <div class="hline-w"></div>
+                <p>
+                    
+                        <a href="" class="btn-social btn-outline"><i class="fa fa-dribbble"></i></a>
+                    
+                        <a href="" class="btn-social btn-outline"><i class="fa fa-facebook"></i></a>
+                    
+                        <a href="" class="btn-social btn-outline"><i class="fa fa-twitter"></i></a>
+                    
+                        <a href="" class="btn-social btn-outline"><i class="fa fa-instagram"></i></a>
+                    
+                        <a href="" class="btn-social btn-outline"><i class="fa fa-tumblr"></i></a>
+                    
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <h4>Our Bunker</h4>
+                <div class="hline-w"></div>
+                <p>
+                    
+                        Some Ave, 987, <br>
+                    
+                        23890, New York, <br>
+                    
+                        United States. <br>
+                    
+                </p>
+            </div>
+        </div><! --/row -->
+    </div><! --/container -->
+</div><! --/footerwrap -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+<script src="/assets/js/retina-1.1.0.js"></script>
+<script src="/assets/js/jquery.hoverdir.js"></script>
+<script src="/assets/js/jquery.hoverex.min.js"></script>
+<script src="/assets/js/jquery.prettyPhoto.js"></script>
+<script src="/assets/js/jquery.isotope.min.js"></script>
+<script src="/assets/js/custom.js"></script>
+
+<script>
+// Portfolio
+(function($) {
+	"use strict";
+	var $container = $('.portfolio'),
+		$items = $container.find('.portfolio-item'),
+		portfolioLayout = 'fitRows';
+		
+		if( $container.hasClass('portfolio-centered') ) {
+			portfolioLayout = 'masonry';
+		}
+				
+		$container.isotope({
+			filter: '*',
+			animationEngine: 'best-available',
+			layoutMode: portfolioLayout,
+			animationOptions: {
+			duration: 750,
+			easing: 'linear',
+			queue: false
+		},
+		masonry: {
+		}
+		}, refreshWaypoints());
+		
+		function refreshWaypoints() {
+			setTimeout(function() {
+			}, 1000);   
+		}
+				
+		$('nav.portfolio-filter ul a').on('click', function() {
+				var selector = $(this).attr('data-filter');
+				$container.isotope({ filter: selector }, refreshWaypoints());
+				$('nav.portfolio-filter ul a').removeClass('active');
+				$(this).addClass('active');
+				return false;
+		});
+		
+		function getColumnNumber() { 
+			var winWidth = $(window).width(), 
+			columnNumber = 1;
+		
+			if (winWidth > 1200) {
+				columnNumber = 5;
+			} else if (winWidth > 950) {
+				columnNumber = 4;
+			} else if (winWidth > 600) {
+				columnNumber = 3;
+			} else if (winWidth > 400) {
+				columnNumber = 2;
+			} else if (winWidth > 250) {
+				columnNumber = 1;
+			}
+				return columnNumber;
+			}       
+			
+			function setColumns() {
+				var winWidth = $(window).width(), 
+				columnNumber = getColumnNumber(), 
+				itemWidth = Math.floor(winWidth / columnNumber);
+				
+				$container.find('.portfolio-item').each(function() { 
+					$(this).css( { 
+					width : itemWidth + 'px' 
+				});
+			});
+		}
+		
+		function setPortfolio() { 
+			setColumns();
+			$container.isotope('reLayout');
+		}
+			
+		$container.imagesLoaded(function () { 
+			setPortfolio();
+		});
+		
+		$(window).on('resize', function () { 
+		setPortfolio();          
+	});
+})(jQuery);
+</script>
+    </body>
+</html>

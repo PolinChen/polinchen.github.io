@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/assets/ico/favicon.ico">
+
+    <title>TTPOC. - Docker for ELK</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/assets/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <!--<link rel="stylesheet" href="/css/main.css">-->
+
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+    <body>
+        <!-- Fixed navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">TTPOC.</a>
+    </div>
+    <div class="navbar-collapse collapse navbar-right">
+      <ul class="nav navbar-nav">
+        <li ><a href="/">HOME</a></li>
+        <li ><a href="/products/">PRODUCTS</a></li>
+        <li ><a href="/blog/">BLOG</a></li>
+        <li ><a href="/portfolio/">PORTFOLIO</a></li>
+        <li ><a href="/about/">ABOUT</a></li>
+        <li ><a href="/contact/">CONTACT</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+
+            <div id="blue">
+    <div class="container">
+        <div class="row">
+            <h3>Docker for ELK</h3>
+        </div><!-- /row -->
+    </div> <!-- /container -->
+</div><!-- /blue -->
+
+
+
+<div class="container mtb">
+    <div class="row">
+        <! -- SINGLE POST -->
+        <div class="col-lg-8">
+            <! -- Blog Post  -->
+            <p><img class="img-responsive" src="/assets/img/blog/bomb.jpg"></p>
+            <a href="/blog/elk/devops/docker"><h3 class="ctitle">Docker for ELK</h3></a>
+            <p><csmall>Jul 1, 2016. | By: Polin</csmall></p>
+              
+            <h1 id="the-docker-for-elk">the Docker for ELK</h1>
+
+<h3 id="section">案例分享</h3>
+<ul>
+  <li>挑戰
+    <ul>
+      <li>輕鬆，經濟地擴展搜索應用程序，以滿足不斷增長的數據量</li>
+      <li>確保優異的搜索和發現體驗</li>
+      <li>管理操作複雜性</li>
+    </ul>
+  </li>
+  <li>解決方案
+    <ul>
+      <li>使用Elasticsearch服務更好的搜索結果更快</li>
+      <li>選擇，以確保一個穩定和持續的搜索體驗託管服務</li>
+      <li>通過委派Elasticsearch基礎設施，雲服務器，降低運營開銷</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Docker Inc.是docker開源平台背後的公司，是docker生態系統的首席贊助商。通過像百度，BBC，eBay，Goldman，ING，Spotify的，和Yelp組織數万使用，Docker是分佈式應用程序的開放平台，允許開發人員和IT管理員建立，docker和在任何地方運行的應用程序。</p>
+
+<p>Docker社區初步完成集裝箱一切從負載平衡器數據庫計時服務以快速的步伐。這些構件可以輕鬆地部署和安排，有大量的安全性，性能和組織的好處。</p>
+
+<h2 id="rdbms">問題：無法持續增長的RDBMS</h2>
+
+<p>Docker 的集裝箱庫需要的是發現，並給予他們的絕對數量，決定了搜索是此功能的最佳用戶體驗。在傳統的RDBMS的初始搜索實現不是滿足性能和質量要求所需的docker。由於docker開發商肯·科克倫說：“我們之前用的數據庫，可以看到漂亮的限制。它被添加負載到我們的數據庫，並作為我們增加了越來越多的數據被越來越慢。”</p>
+
+<p>移動從他們的RDBMS遠在作出決定後，docker 評估既Elasticsearch和其他搜索技術。他們決定在Elasticsearch作為其下一代平台。</p>
+
+<p>在作出搬到Elasticsearch的決定，docker 接下來考慮所需的業務工作。像管理一個Elasticsearch分佈式數據庫提出了一些棘手的業務挑戰，如保持一個可行的法定人數，確保複製configured正確的高可用性和歸檔/備份管理。鑑於這些和其他的複雜性，決定做出自己的Elasticsearch基礎設施委託給一個完全託管提供商。</p>
+
+<h2 id="section-1">解決方案：隔離關鍵問題</h2>
+
+<p>Docker 通過查看各種不同的標準進行評價託管Elasticsearch可用的選項。據docker開發商約翰·科斯塔：“我們評估了一些其他託管Elasticsearch廠商在分析過程中，我們考慮的位置，索引（開發，運行，生產），可用資源（內存），高可用性選項和價格的一些彈性雲。是最好的選擇。“</p>
+
+<p>穩定的性能和可靠性是為docker關鍵問題，使得彈性雲的專用Elasticsearch集群非常適合兩個關鍵原因。首先，彈性雲的基礎上與保留的內存和CPU專用集群託管模式，給他們保證，他們的應用是一貫高性能。其次，雲服務器的高可用性選項給了docker加入保證了即使在一個完整的數據中心的情況下，停運自己的搜索數據庫將仍然可用。</p>
+
+<p>此外，dokcer 的指數配置要求是針對彈性雲架構一個良好的網絡連接。由於每個彈性雲客戶分配與它的使用沒有任何限制專用Elasticsearch集群，他們因為他們看到網絡自由分配指標。 基於容錯，及時的支持和易於操作的彈性雲符合我們的需求。</p>
+
+<h2 id="section-2">好處：進入生產</h2>
+
+<p>搬移在生產中受影響Elasticsearch性能提升docker一直在尋找。負載對他們的生產RDBMS下降顯著和搜索延遲和吞吐量進行了大量改進。此外，docker是能夠通過使用Elasticsearch的領域促進和功能評分查詢，以促進更多的流行和相關的搜索結果，大大提高了搜索結果的質量。</p>
+
+<p>部署在彈性雲docker指數的跑腿是快速和簡單。由於docker的約翰·科斯塔說：“搬移到生產很容易，因為它只需要我們添加一個信用卡賬單再抓生產設置，我們有關於索引，存儲設置和可靠性設置的幾個問題的彈性雲的支持。工作人員及時和詳細的在他們的反應。“</p>
+
+<p>在他們的新的基礎設施docker能夠更好地服務於搜索結果更快。這意味著更強的易用性使用docker平台的開發人員。對於此docker是至關重要的;一個工具，圍繞提供動力和便利性也必須有其具備這些特點的配套服務。最終，Elasticsearch已經證明了該公司一個強大的工具，幫助他們在他們的核心任務的重要組成部分提供：提供偉大的開發經驗。</p>
+
+
+
+            <div class="spacing"></div>
+            <!-- <h6>SHARE:</h6>
+            <p class="share">
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-tumblr"></i></a>
+                <a href="#"><i class="fa fa-google-plus"></i></a>		 		
+            </p> -->
+        </div><! --/col-lg-8 -->
+        
+        <div class="col-lg-3">
+   <!--  <h4>Search</h4>
+    <div class="hline"></div>
+        <p>
+            <br/>
+            <input type="text" class="form-control" placeholder="Search something">
+        </p>
+    <div class="spacing"></div> -->
+    <h4>Subscribe</h4>
+    <div class="hline"></div>
+        <p>
+            <p class="rss-subscribe">Subscribe to this blog <a href="/feed.xml">via RSS</a>.</p>
+        </p>
+    <div class="spacing"></div>
+    <h4>Categories</h4>
+    <div class="hline"></div>
+    
+        <p>
+            <a href="/category/#Tips&Tricks"><i class="fa fa-angle-right"></i> Tips&tricks</a>
+            <span class="badge badge-theme pull-right">1</span>
+        </p>
+    
+        <p>
+            <a href="/category/#Code-Snippets"><i class="fa fa-angle-right"></i> Code-snippets</a>
+            <span class="badge badge-theme pull-right">1</span>
+        </p>
+    
+        <p>
+            <a href="/category/#Web-Design"><i class="fa fa-angle-right"></i> Web-design</a>
+            <span class="badge badge-theme pull-right">1</span>
+        </p>
+    
+        <p>
+            <a href="/category/#Development"><i class="fa fa-angle-right"></i> Development</a>
+            <span class="badge badge-theme pull-right">1</span>
+        </p>
+    
+        <p>
+            <a href="/category/#ELK"><i class="fa fa-angle-right"></i> Elk</a>
+            <span class="badge badge-theme pull-right">16</span>
+        </p>
+    
+        <p>
+            <a href="/category/#DevOps"><i class="fa fa-angle-right"></i> Devops</a>
+            <span class="badge badge-theme pull-right">15</span>
+        </p>
+    
+        <p>
+            <a href="/category/#iPOC"><i class="fa fa-angle-right"></i> Ipoc</a>
+            <span class="badge badge-theme pull-right">1</span>
+        </p>
+    
+        <p>
+            <a href="/category/#NMON"><i class="fa fa-angle-right"></i> Nmon</a>
+            <span class="badge badge-theme pull-right">3</span>
+        </p>
+    
+        <p>
+            <a href="/category/#DEVOPS"><i class="fa fa-angle-right"></i> Devops</a>
+            <span class="badge badge-theme pull-right">1</span>
+        </p>
+    
+
+    <div class="spacing"></div>
+
+    <h4>Recent Posts</h4>
+    <div class="hline"></div>
+        <ul class="popular-posts">
+             
+                <li>
+                    <a href="/blog/elk/nmon/elktop10"><img src="/assets/img/blog/thumbs/thumb02.jpg" alt="Popular Post"></a>
+                    <p><a href="/blog/elk/nmon/elktop10">Top 10 reason for ELK</a></p>
+                <em>Posted on 10 Jul 2016</em>
+            </li>
+             
+                <li>
+                    <a href="/blog/elk/devops/devopsKKK"><img src="/assets/img/blog/thumbs/thumb01.jpg" alt="Popular Post"></a>
+                    <p><a href="/blog/elk/devops/devopsKKK">NMONS iPOC 維運分析評估改</a></p>
+                <em>Posted on 02 Jul 2016</em>
+            </li>
+             
+                <li>
+                    <a href="/blog/elk/devops/elkplusdevops"><img src="/assets/img/blog/thumbs/thumb01.jpg" alt="Popular Post"></a>
+                    <p><a href="/blog/elk/devops/elkplusdevops">DevOps for ELK</a></p>
+                <em>Posted on 01 Jul 2016</em>
+            </li>
+             
+                <li>
+                    <a href="/blog/elk/devops/elkcase1"><img src="/assets/img/blog/thumbs/thumb01.jpg" alt="Popular Post"></a>
+                    <p><a href="/blog/elk/devops/elkcase1">大海撈針：使用ELK 做異常檢測</a></p>
+                <em>Posted on 01 Jul 2016</em>
+            </li>
+             
+        </ul>
+
+    <div class="spacing"></div>
+
+    <h4>Popular Tags</h4>
+    <div class="hline"></div>
+    <p>
+    
+            <a class="btn btn-theme" href="/category/#Tips&Tricks" role="button">Tips&tricks (1)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#Code-Snippets" role="button">Code-snippets (1)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#Web-Design" role="button">Web-design (1)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#Development" role="button">Development (1)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#ELK" role="button">Elk (16)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#DevOps" role="button">Devops (15)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#iPOC" role="button">Ipoc (1)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#NMON" role="button">Nmon (3)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#DEVOPS" role="button">Devops (1)</a>	         
+        
+    </p>
+</div>
+
+
+    </div><! --/row -->
+</div><! --/container -->
+
+        <div id="footerwrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <h4>About</h4>
+                <div class="hline-w"></div>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+            </div>
+            <div class="col-lg-4">
+                <h4>Social Links</h4>
+                <div class="hline-w"></div>
+                <p>
+                    
+                        <a href="" class="btn-social btn-outline"><i class="fa fa-dribbble"></i></a>
+                    
+                        <a href="" class="btn-social btn-outline"><i class="fa fa-facebook"></i></a>
+                    
+                        <a href="" class="btn-social btn-outline"><i class="fa fa-twitter"></i></a>
+                    
+                        <a href="" class="btn-social btn-outline"><i class="fa fa-instagram"></i></a>
+                    
+                        <a href="" class="btn-social btn-outline"><i class="fa fa-tumblr"></i></a>
+                    
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <h4>Our Bunker</h4>
+                <div class="hline-w"></div>
+                <p>
+                    
+                        Some Ave, 987, <br>
+                    
+                        23890, New York, <br>
+                    
+                        United States. <br>
+                    
+                </p>
+            </div>
+        </div><! --/row -->
+    </div><! --/container -->
+</div><! --/footerwrap -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+<script src="/assets/js/retina-1.1.0.js"></script>
+<script src="/assets/js/jquery.hoverdir.js"></script>
+<script src="/assets/js/jquery.hoverex.min.js"></script>
+<script src="/assets/js/jquery.prettyPhoto.js"></script>
+<script src="/assets/js/jquery.isotope.min.js"></script>
+<script src="/assets/js/custom.js"></script>
+
+<script>
+// Portfolio
+(function($) {
+	"use strict";
+	var $container = $('.portfolio'),
+		$items = $container.find('.portfolio-item'),
+		portfolioLayout = 'fitRows';
+		
+		if( $container.hasClass('portfolio-centered') ) {
+			portfolioLayout = 'masonry';
+		}
+				
+		$container.isotope({
+			filter: '*',
+			animationEngine: 'best-available',
+			layoutMode: portfolioLayout,
+			animationOptions: {
+			duration: 750,
+			easing: 'linear',
+			queue: false
+		},
+		masonry: {
+		}
+		}, refreshWaypoints());
+		
+		function refreshWaypoints() {
+			setTimeout(function() {
+			}, 1000);   
+		}
+				
+		$('nav.portfolio-filter ul a').on('click', function() {
+				var selector = $(this).attr('data-filter');
+				$container.isotope({ filter: selector }, refreshWaypoints());
+				$('nav.portfolio-filter ul a').removeClass('active');
+				$(this).addClass('active');
+				return false;
+		});
+		
+		function getColumnNumber() { 
+			var winWidth = $(window).width(), 
+			columnNumber = 1;
+		
+			if (winWidth > 1200) {
+				columnNumber = 5;
+			} else if (winWidth > 950) {
+				columnNumber = 4;
+			} else if (winWidth > 600) {
+				columnNumber = 3;
+			} else if (winWidth > 400) {
+				columnNumber = 2;
+			} else if (winWidth > 250) {
+				columnNumber = 1;
+			}
+				return columnNumber;
+			}       
+			
+			function setColumns() {
+				var winWidth = $(window).width(), 
+				columnNumber = getColumnNumber(), 
+				itemWidth = Math.floor(winWidth / columnNumber);
+				
+				$container.find('.portfolio-item').each(function() { 
+					$(this).css( { 
+					width : itemWidth + 'px' 
+				});
+			});
+		}
+		
+		function setPortfolio() { 
+			setColumns();
+			$container.isotope('reLayout');
+		}
+			
+		$container.imagesLoaded(function () { 
+			setPortfolio();
+		});
+		
+		$(window).on('resize', function () { 
+		setPortfolio();          
+	});
+})(jQuery);
+</script>
+    </body>
+</html>

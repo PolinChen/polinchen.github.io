@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/assets/ico/favicon.ico">
+
+    <title>TTPOC. - Blog</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/assets/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <link href="/assets/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <!--<link rel="stylesheet" href="/css/main.css">-->
+
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+    <body>
+        <!-- Fixed navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">TTPOC.</a>
+    </div>
+    <div class="navbar-collapse collapse navbar-right">
+      <ul class="nav navbar-nav">
+        <li ><a href="/">HOME</a></li>
+        <li ><a href="/products/">PRODUCTS</a></li>
+        <li class="active"><a href="/blog/">BLOG</a></li>
+        <li ><a href="/portfolio/">PORTFOLIO</a></li>
+        <li ><a href="/about/">ABOUT</a></li>
+        <li ><a href="/contact/">CONTACT</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+
+            <div id="blue">
+    <div class="container">
+        <div class="row">
+            <h3>Blog</h3>
+        </div><!-- /row -->
+    </div> <!-- /container -->
+</div><!-- /blue -->
+
+    
+
+    <div class="container mtb">
+    <div class="row">
+
+        <! -- BLOG POSTS LIST -->
+        <div class="col-lg-9">
+
+            
+                <! -- Blog Post -->
+                <a href="/blog/elk/nmon/elktop10">
+                    <img class="img-responsive" src="/assets/img/blog/bomb.jpg">
+                </a>    
+                <a href="/blog/elk/nmon/elktop10"><h3 class="ctitle">Top 10 reason for ELK</h3></a>
+                <p><csmall>Jul 10, 2016. | By: Polin</csmall></p>
+                <p><img src="http://logz.io/wp-content/uploads/2016/06/elastic.png" alt="" /></p>
+
+<p>Getting acquainted with ELK lingo is one of the first things you’re going to have to do when starting out with the stack. Just like with any programming language, there are some basic concepts that once internalized, make the learning curve less traumatic.</p>
+
+<p>We’ve put together ten of the most important concepts you’re going to want to understand. While the concepts apply specifically to Elasticsearch, they are also are important to understand when operating the stack as a whole. When applicable — and to make it easier to understand — we will compare concepts to parallel terms in the world of relational databases.</p>
+
+<h2 id="fields">1. Fields</h2>
+
+<p>Fields are the smallest individual unit of data in Elasticsearch. Each field has a defined type and contains a single piece of data that can be, for example, a boolean, string or array expression. A collection of fields are together a single Elasticsearch document.</p>
+
+<p><br /></p>
+
+<p>Starting with Elasticsearch version 2.X, field names cannot start with special characters and cannot contain dots.</p>
+
+<h2 id="documents">2. Documents</h2>
+<p>Documents are JSON objects that are stored within an Elasticsearch index and are considered the base unit of storage. In the world of relational databases, documents can be compared to a row in table.</p>
+
+<p>For example, let’s assume that you are running an e-commerce application. You could have one document per product or one document per order. There is no limit to how many documents you can store in a particular index.</p>
+
+<p>Data in documents is defined with fields comprised of keys and values. A key is the name of the field, and a value can be an item of many different types such as a string, a number, a boolean expression, another object, or an array of values.</p>
+
+<p>Documents also contain reserved fields that constitute the document metadata such as:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>* _index – the index where the document resides
+* _type – the type that the document represents
+* _id – the unique identifier for the document
+</code></pre>
+</div>
+
+<p>An example of a document:</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="p">{</span>
+   <span class="s2">"_id"</span><span class="err">:</span> <span class="mi">3</span><span class="p">,</span>
+   <span class="err">“</span><span class="nx">_type</span><span class="err">”:</span> <span class="p">[</span><span class="err">“</span><span class="nx">user</span><span class="err">”</span><span class="p">],</span>
+   <span class="s2">"age"</span><span class="err">:</span> <span class="mi">28</span><span class="p">,</span>
+   <span class="s2">"name"</span><span class="err">:</span> <span class="p">[</span><span class="s2">"daniel”],
+   "</span><span class="nx">year</span><span class="err">":</span><span class="mi">1989</span><span class="p">,</span>
+<span class="p">}</span></code></pre></figure>
+
+<h2 id="types">3. Types</h2>
+<p>Elasticsearch types are used within documents to subdivide similar types of data wherein each type represents a unique class of documents. Types consist of a name and a mapping (see below) and are used by adding the _type field. This field can then be used for filtering when querying a specific type.</p>
+
+<p>An index can have any number of types, and you can store documents belonging to these types in the same index.</p>
+
+<h2 id="mapping">4. Mapping</h2>
+<p>Like a schema in the world of relational databases, mapping defines the different types that reside within an index. It defines the fields for documents of a specific type — the data type (such as string and integer) and how the fields should be indexed and stored in Elasticsearch.</p>
+
+<p>A mapping can be defined explicitly or generated automatically when a document is indexed using templates. (Templates include settings and mappings that can be applied automatically to a new index.)</p>
+
+<p><img src="http://logz.io/blog/10-elasticsearch-concepts/?utm_source=facebook&amp;utm_medium=social&amp;utm_content=10_elasticsearch_concepts&amp;utm_campaign=blog_post" alt="logz.io" /></p>
+
+                <p><a href="/blog/elk/nmon/elktop10">[Read More]</a></p>
+                <div class="hline"></div>
+
+                <div class="spacing"></div>
+            
+                <! -- Blog Post -->
+                <a href="/blog/elk/devops/devopsKKK">
+                    <img class="img-responsive" src="/assets/img/blog/bomb.jpg">
+                </a>    
+                <a href="/blog/elk/devops/devopsKKK"><h3 class="ctitle">NMONS iPOC 維運分析評估改</h3></a>
+                <p><csmall>Jul 2, 2016. | By: Polin</csmall></p>
+                <p>devops_Learning         ibm.tar.gz              solid-1                 ttpoc_web               unixformat
+# linux nmon 和 top 的log 收集方案</p>
+
+<blockquote>
+  <p>利用IBM linux 的nmon 命令和linux 自帶的top 命令收集performance log， 並且利用ftp定時發送log 到 log server 中。</p>
+</blockquote>
+
+<h2 id="linux-log-server-">linux log server 的系統結構</h2>
+
+<p><img src="/assets/img/linux_ftp.png" alt="設定的內容" /></p>
+
+<h2 id="nmontop-log-shell-script">收集nmon&amp;top log 的shell script:</h2>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ cat /opt/nmons/nmons-collect.sh
+#!/bin/bash
+nmonDir="/opt/nmon"
+nmonTool=/opt/nmon/nmon_linux_x86
+#nmonDir=`cat /etc/passwd | grep ^nsadmin | awk -F ':' '{ print $(NF -1) }'`
+#nmonTool=$adpath/nmon/nmon_x86_64_ubuntu1104
+
+echo $nmonDir
+host=`hostname | awk -F"." '{print $1}'`
+today=`date +%y%m%d`
+count=1440
+top -d 60 -n $count -b -i &gt; $nmonDir/$host\_$today.top &amp;
+$nmonTool -f -N -t -s 60 -c $count -m $nmonDir
+
+</code></pre>
+</div>
+
+
+                <p><a href="/blog/elk/devops/devopsKKK">[Read More]</a></p>
+                <div class="hline"></div>
+
+                <div class="spacing"></div>
+            
+                <! -- Blog Post -->
+                <a href="/blog/elk/devops/elkplusdevops">
+                    <img class="img-responsive" src="/assets/img/blog/bomb.jpg">
+                </a>    
+                <a href="/blog/elk/devops/elkplusdevops"><h3 class="ctitle">DevOps for ELK</h3></a>
+                <p><csmall>Jul 1, 2016. | By: Polin</csmall></p>
+                <p>最近DevOps的puppet 調查的2016年國家給了很多見識到越來越需要IT領域內的DevOps專家。雖然業內認同的DevOps首先是一個方法，它很快發展成為了自己的職稱為好。 DevOps的人才有能力形成集成和交付成一個連貫的過程，有利於保持產品的質量，提高我們的響應時間到最終用戶的請求，並理順日常運作。</p>
+
+<p>這些技能是在2016年嚴重的需求與招聘經理尋求的DevOps專業今年的58％。而此前市場報告大多集中在行業新的和不斷發展的結構，2016年的報告認為它作為一個蓬勃發展已經和必要的一塊拼圖IT的。一切該調查稱，一個消息肯定是清楚的：DevOps的專家們的頭等大事IT招聘人員和招聘經理在2016年。</p>
+
+<p>由於DevOps的專家都需要有這樣一個複雜多樣的技能，地位已經變得相當的精英和著名。他們的工資是由幾個因素，即經驗，美國的地理位置，並在行業標準的變化來確定。目前，由於需求上升和明確的好處有內部的DevOps的，工資明顯比其他IT專家高。</p>
+
+<p>下面是見解的工資和環境之間的關係，無論是經驗，位置或行業的變化。</p>
+
+<h2 id="section">經驗</h2>
+
+<p>教育並不一定轉化到的DevOps行業內較高的報酬。在調查貢獻者的一半（52％）具有大學本科學歷，只有25％持有碩士學位。信不信由你，在2015年高中畢業文憑專業人士贏得$ 106734，而那些具有碩士學位的人收入$ 105,000。據2016年的調查，但是，DevOps的專家們收入每年109641 $更高的平均工資。</p>
+
+<p>這些數字自然鼓勵IT專業人士尋求即使他們已經在行業內接受教育最少的這些位置。大學是不是僱用的DevOps過程中的一個優先事項 - 相反，第二百六正在尋找不同的IT技能和實踐經驗相結合。</p>
+
+<p>如果你正在考慮尋找一個DevOps的位置，還有，你應該專注於某些技能。 DevOps的專家建議對業務（51％），通信（49％）和分析（38％）的技能珩磨，並能說流利的雲部署和虛擬化（31％），編程和系統架構（27％），及配置管理（22％）。</p>
+
+<p>雖然大學學位都沒有必要為這些職位，申請人還需要行業內的經驗多種多樣。否則，這幾乎是不可能獲得所有這些技能從只是學習。更多的經驗，不僅有利於你在就業方面，但可幫助您獲得更高的報酬為好。事實上，有10年以上的受訪者工資中位數的經驗是比那些1〜6年高出33％的經驗。除了薪水，企業給他們的DevOps員工像保險，退休，帶薪休假等福利。 “這些福利的成本必須計算員工工作的實際成本時，應考慮到。好處的範圍可以從30％到員工的基本工資的110％，與1.3和2.1倍增，分別為“傀儡報告說。</p>
+
+<h2 id="section-1">地理關係</h2>
+
+<p>北美公司內的DevOps崗位薪酬高於亞太和歐洲顯著較高（35％）。紐約專門有更高的工資高於全國平均水平。</p>
+
+<p>然而，大多數受訪者表示，他們不關心工作穩定，並預計在明年加薪。由於幾乎DevOps的一半，2015年獲得了加薪，很明顯，該領域的增長和企業都投入了更多的資源，他們的IT團隊。</p>
+
+<p>在美國，最高的DevOps工資軍事/國防，政府，能源垂直部門中。最低的，然而，在零售，專業服務和消費品行業。如果你住在一個具有軍事或政府存在的領域，它強烈建議去尋找那些行業內的DevOps的機會。</p>
+
+<h2 id="section-2">行業變化</h2>
+
+<p>的DevOps的專業人士絕大多數（76％）看到了他們的工資和獎金額外增加了2014年，85％在2015年看到了一個增加很明顯，DevOps的工資不斷上升，以及2016年底。</p>
+
+<p>這些變化每家企業各不相同，取決於DevOps的團隊的規模。通常情況下，DevOps的工資增加，因為團隊的規模擴大。例如，一個10人組成的團隊可能會賺$ 104,000的中位數工資，而球隊100+使$一十二萬九千二百三一個工資中位數。</p>
+
+<p>顯然，行業和機會越來越多。由於一事表態的工資，穩定性和需求的詳細信息面，這是相當明顯，具有所需技能的IT專業人員應尋求獲得的技能，以便採取這些工作。</p>
+
+<h2 id="section-3">最後要注意</h2>
+
+<p>如果您已經考慮進入的DevOps領域，這是為了磨練自己的技能，並開始採訪過程中一個很好的時間。該行業的持續增長和DevOps的需求是既增加，因此，如果您在IT環境是在你的能力有信心成為連接器，這可能是最適合你的職業機會。</p>
+
+
+                <p><a href="/blog/elk/devops/elkplusdevops">[Read More]</a></p>
+                <div class="hline"></div>
+
+                <div class="spacing"></div>
+            
+                <! -- Blog Post -->
+                <a href="/blog/elk/devops/elkcase1">
+                    <img class="img-responsive" src="/assets/img/blog/bomb.jpg">
+                </a>    
+                <a href="/blog/elk/devops/elkcase1"><h3 class="ctitle">大海撈針：使用ELK 做異常檢測</h3></a>
+                <p><csmall>Jul 1, 2016. | By: Polin</csmall></p>
+                <p>##大海撈針：使用ELK 做異常檢測</p>
+
+<p><img src="http://logz.io/wp-content/uploads/2016/07/haystack.jpg" alt="logo" /></p>
+
+<p>下面的情況可能聽起來很熟悉。</p>
+
+<p>這是半夜。您的手機開始振動。在另一端，這是一個瘋狂的客戶（或老闆）抱怨，該網站已關閉。您進入危機模式，並啟動故障排除過程，其中涉及攝入大量咖啡因和 - 通常是 - 與正在解決的問題結束。</p>
+
+<p>有時，這種情況下可以通過使用正確的記錄和監測策略來避免。集中記錄，例如，是實現有用的策略，但並不好用。最大的挑戰，當然，是通過日誌數據的海量所有進入該系統，並確定相關性和異常篩選。</p>
+
+<p>其中之一是，ELK是如此受歡迎的原因是，它是流媒體大集合來自不同來源的數據，使用查詢和搜索識別的相關性，並創造豐富的可視化和在他們頂部監控儀表盤非常有用的工具。</p>
+
+<p>以下描述了一個簡單的工作流程，通過分析不同類型的日誌並發現它們之間的相關性來解決網站崩潰。要做到這一點，我們將使用企業級ELK - 但大部分所描述的步驟可以用開源ELK任何安裝完成。</p>
+
+<p>由一個基於Apache Web服務器和MySQL數據庫的簡單Web應用程序。在這種情況下，ELK 收集Apache日誌，數據庫日誌，並使用ELK性能代理服務器的性能指標。</p>
+
+<h3 id="section">危機處理過程</h3>
+<p>要啟動故障排除過程中，我們要訪問我們Kibana接口，並開始查詢Elasticsearch相關日誌信息。</p>
+
+<p>首先，我要設定時間框架，以“今天”讓所有最近發生的事件的概述所記錄：</p>
+
+<p><img src="http://logz.io/wp-content/uploads/2016/07/log-of-all-recent-events.png" alt="detail1" /></p>
+
+<p>在這種情況下，我可以看到這個時間範圍內超過60,000日誌消息。現在是時候嘗試在Kibana查詢Elasticsearch找到我們大海撈針。</p>
+
+<p>現在，因為我們正在調查一個網站的崩潰，一個良好的開端將是我們Apache日誌（你也可以在這裡閱讀更多有關使用ELK堆棧作為Apache日誌分析器）。具體來說，我們將使用字段級搜索查明Apache的錯誤信息：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>type:apache_access AND response:[500 TO *]
+</code></pre>
+</div>
+
+<p>這將返回的730與500及以上響應代碼Apache的錯誤列表：</p>
+
+<p><img src="http://logz.io/wp-content/uploads/2016/07/apache-error-codes-500-and-above.png" alt="elk2" /></p>
+
+<p>我們的範圍還是有點太大，能夠返回有用的信息。為了進一步縮小範圍，我將不得不更加具體和側重於504回复：</p>
+
+<p><img src="http://logz.io/wp-content/uploads/2016/07/apache-504-errors-1.png" alt="elk3" /></p>
+
+<p>此搜索結果中的事件明顯可見的峰值。為了進一步深入，我要去點擊bar，並添加“響應”，並在郵件列表“類型”字段，使活動更具可讀性的列表：</p>
+
+<p><img src="http://logz.io/wp-content/uploads/2016/07/apache-errors-with-response-type.png" alt="elk4" /></p>
+
+<p>如果我們選擇顯示日誌消息之一，我們將獲得該事件的詳細視圖 - 消息字段及其值的列表（選擇JSON選項卡，看到JSON格式的消息）</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+   </span><span class="nt">"_index"</span><span class="p">:</span><span class="w"> </span><span class="s2">"logz-xmywsrkbovjddxljvcahcxsrbifbccrh-160627_v1"</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"apache_access"</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AVWPKMnATxyubhgJppgh"</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"_score"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"_source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"request"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/cart/go"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"agent"</span><span class="p">:</span><span class="w"> </span><span class="s2">"\"Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)\""</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"minor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"auth"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"ident"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"apache_access"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"major"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"clientip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"128.93.102.172"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"geoip"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+         </span><span class="nt">"timezone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Europe/Paris"</span><span class="p">,</span><span class="w">
+         </span><span class="nt">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"128.93.102.172"</span><span class="p">,</span><span class="w">
+         </span><span class="nt">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="mi">46</span><span class="p">,</span><span class="w">
+         </span><span class="nt">"country_code2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FR"</span><span class="p">,</span><span class="w">
+         </span><span class="nt">"country_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"France"</span><span class="p">,</span><span class="w">
+         </span><span class="nt">"country_code3"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FRA"</span><span class="p">,</span><span class="w">
+         </span><span class="nt">"continent_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EU"</span><span class="p">,</span><span class="w">
+</span><span class="nt">"location"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="mi">46</span><span class="w">
+         </span><span class="p">],</span><span class="w">
+         </span><span class="nt">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nt">"os"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Other"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"verb"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GET"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"128.93.102.172 - - [27/Jun/2016:10:34:53 +0000] \"GET /cart/go HTTP/1.1\" 504 93 \"-\" \"Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)\""</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+         </span><span class="s2">"_logz_upload_8021"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"apache-geoip"</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nt">"referrer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"\"-\""</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"@timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-27T10:34:53.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="mi">504</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"bytes"</span><span class="p">:</span><span class="w"> </span><span class="mi">93</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Googlebot"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"os_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Other"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"httpversion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.1"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"device"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Spider"</span><span class="w">
+   </span><span class="p">},</span><span class="w">
+   </span><span class="nt">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"@timestamp"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+         </span><span class="mi">1467023693000</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+   </span><span class="p">},</span><span class="w">
+   </span><span class="nt">"highlight"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+ 
+</span><span class="s2">"@kibana-highlighted-field@apache_access@/kibana-highlighted-field@"</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+   </span><span class="p">},</span><span class="w">
+   </span><span class="nt">"sort"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="mi">1467023693000</span><span class="w">
+   </span><span class="p">]</span><span class="w">
+   </span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>但如何將這些信息變成可操作的東西？</p>
+
+<h2 id="section-1">查明原因</h2>
+
+<p>為了得到一個更寬廣的視角，並試圖了解是否有我們的Apache的錯誤和其他事件發生在環境之間的關係，讓我們的“縮小”，而我們登錄到麋鹿。</p>
+
+<p>要做到這一點，我們將使用一個非常有用的功能是特定於ELK - +/-按鈕即在每個日誌消息的右上角。這使您輕鬆顯示已採取了一秒，十秒鐘，三十秒或初步選定事件60秒內發生的其他事件的選項。 （如果您使用Kibana的開源版本，可以通過手動配置的時限做同樣的事情。）</p>
+
+<p>點擊+/-十秒移除我們用於查找Apache的504事件的搜索過濾器給我們的所有活動我們整個系統中來，並發生10秒鐘，然後和我們的504事件之後的聚合視圖：</p>
+
+<p><img src="http://logz.io/wp-content/uploads/2016/07/aggregated-logs-of-all-correlated-events.png" alt="elk5" /></p>
+
+<p>什麼突然變得可見的是，經過正確的Web應用程序交易錯誤正在記錄阿帕奇504響應。打開這些錯誤之一揭示了交易，因為與我們的後端連接超時而失敗：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+   </span><span class="nt">"_index"</span><span class="p">:</span><span class="w"> </span><span class="s2">"logz-xmywsrkbovjddxljvcahcxsrbifbccrh-160627_v1"</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"webapp-transaction"</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AVWPKMuFbofAsbciXwUI"</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"_score"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"_source"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"transaction_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"25ce2a4f-3f3d-4666-9339-ca63597a8e30"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"latency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"403"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"return_message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Transaction Failed - Connection Timeout"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WebApp Transactions"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"webapp-transaction"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+         </span><span class="s2">"_logz_http_bulk_json_8070"</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nt">"@timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-06-27T10:35:03.000+00:00"</span><span class="p">,</span><span class="w">
+      </span><span class="nt">"return_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"617"</span><span class="w">
+   </span><span class="p">},</span><span class="w">
+   </span><span class="nt">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nt">"@timestamp"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+         </span><span class="mi">1467023703000</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+   </span><span class="p">},</span><span class="w">
+   </span><span class="nt">"sort"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="mi">1467023703000</span><span class="w">
+   </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h2 id="section-2">啟動監控遊戲</h2>
+<p>已經成功地檢測出了異常，取得日誌之間的相關性，並troubleshooted的根本原因。好消息是，這是這一進程的努力的一部分。壞消息是，我們遠遠沒有完成。</p>
+
+<p>要密切關注這些事件，現在是時候設置一些監控圖。在ELK行話來說，這些都是Kibana可視化和儀表板。</p>
+
+<p>首先，我們要創建一個新的線條圖，顯示跨時間的webapp交易。要做到這一點，我們將使用“return_message”字段：</p>
+
+<p><img src="http://logz.io/wp-content/uploads/2016/07/webapp-transactions-over-time-log.png" alt="elk6" /></p>
+
+<p>下一步，我們將創建一個新的線條圖，顯示跨時間HTTP響應交易。要做到這一點，將使用“響應”字段：</p>
+
+<p><img src="http://logz.io/wp-content/uploads/2016/07/http-responses-over-time.png" alt="elk7" /></p>
+
+<p>最後但並非最不重要的，我們要創建另一個可視化顯示使用’cpu_blk_tot“字段跨時CPU使用率：</p>
+
+<p><img src="http://logz.io/wp-content/uploads/2016/07/cpu-usage-log.png" alt="elk7" /></p>
+
+<p>這三個可視化添加到一個單一的儀表板很容易地確定事件的相關性：</p>
+
+<p><img src="http://logz.io/wp-content/uploads/2016/07/event-log-correlations-dashboard.png" alt="elk8" /></p>
+
+<p>當然，這些只是如何可視日誌數據的幾個例子。您可以切片和切塊的數據，你想要的任何方式，這一切都取決於你正在監視哪些事件和環境的設立。</p>
+
+<h2 id="section-3">如何防止此類事件在將來發生？</h2>
+
+<p>有通常的DevOps工程師，以防止壞的代碼，開發者寫導致網站崩潰，沒有有效的方法。但是，有辦法讓DevOps的船員在他們的日誌策略更加積極主動，使他們能夠更迅速地找到事故的原因。</p>
+
+<p>例如，根據查詢創建警報將提醒您實時事件。作為一個例子，我將使用ELK 報警機制。如果您在使用自己的ELK，則需要配置自己的警報系統。</p>
+
+<p>首先，讓我們篩選Kibana顯示的事件列表中只顯示交易錯誤。要做到這一點，我們要點擊這個相鄰放大鏡圖標“return_message”字段：</p>
+
+<p><img src="http://logz.io/wp-content/uploads/2016/07/filter-list-of-log-events.png" alt="elk9" /></p>
+
+<p>此外，要更改時間框架回“今天得到了廣泛的角度來看：</p>
+
+<p><img src="http://logz.io/wp-content/uploads/2016/07/apache-504-errors-one-day.png" alt="elk10" /></p>
+
+<p>這有助於我們確定哪些可以被視為交易的錯誤的上下文中的“異常”。我們可以看到，每三十分鐘出現最多三個錯誤。此外，我們可以在我們的報導中墜毀看到35事件的一個高峰。</p>
+
+<p>在內置到ELK的UI界面Kibana，我要去點擊頂部右上角的“創建警報”按鈕：</p>
+
+<p><img src="http://logz.io/wp-content/uploads/2016/07/elk-stack-alert-setup.png" alt="elk11" /></p>
+
+<p>要監視的實際查詢在警報定義對話框自動輸入：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>return_message：“交易失敗 - 連接超時”
+</code></pre>
+</div>
+<p>這裡要輸入的其他字段為警報，閾值配置和觸發器定義（您想如何在觸發警報通知）的名稱和描述。</p>
+
+<p>對於本例中的門檻，我要配置ELK只要超過三個事件五分鐘的時間內發生給我通知。</p>
+
+<p>最後但並非最不重要的，我要配置警報給我通知通過電子郵件。其他可用的選項是使用網絡掛接，其接收通過郵件應用通知，如HipChat或懈怠。</p>
+
+<p>保存後，警報可以從“警報”選項卡中進行編輯和管理。您也可以創建一個Kibana可視化，顯示您正在觸發各種ELK警報。</p>
+
+<p>要做到這一點，我將使用下面的查詢來搜索警報：
+接下來，我添加了“警報的描述”和“警報標題”來獲得被記錄一些可視性警示：</p>
+
+<p><img src="http://logz.io/wp-content/uploads/2016/07/search-alert-logs.png" alt="elk12" /></p>
+
+<p>使用這個搜索，我要創建一個新的柱狀圖可視化顯示我正在ELKo隨著時間的推移觸發不同的警報：</p>
+
+<p><img src="http://logz.io/wp-content/uploads/2016/07/count-of-alerts-being-triggered.png" alt="elk13" /></p>
+
+<h3 id="section-4">最後需要說明</h3>
+<p>找到一本書在圖書館不知道標題和作者名字是不可能的。在日誌分析的領域，ELK，使這項工作更容易憑藉其強大的查詢功能。儘管如此 - 確定在大型數據集的異常現象仍然是DevOps一個真正的障礙。</p>
+
+                <p><a href="/blog/elk/devops/elkcase1">[Read More]</a></p>
+                <div class="hline"></div>
+
+                <div class="spacing"></div>
+            
+                <! -- Blog Post -->
+                <a href="/blog/elk/devops/docker">
+                    <img class="img-responsive" src="/assets/img/blog/bomb.jpg">
+                </a>    
+                <a href="/blog/elk/devops/docker"><h3 class="ctitle">Docker for ELK</h3></a>
+                <p><csmall>Jul 1, 2016. | By: Polin</csmall></p>
+                <h1 id="the-docker-for-elk">the Docker for ELK</h1>
+
+<h3 id="section">案例分享</h3>
+<ul>
+  <li>挑戰
+    <ul>
+      <li>輕鬆，經濟地擴展搜索應用程序，以滿足不斷增長的數據量</li>
+      <li>確保優異的搜索和發現體驗</li>
+      <li>管理操作複雜性</li>
+    </ul>
+  </li>
+  <li>解決方案
+    <ul>
+      <li>使用Elasticsearch服務更好的搜索結果更快</li>
+      <li>選擇，以確保一個穩定和持續的搜索體驗託管服務</li>
+      <li>通過委派Elasticsearch基礎設施，雲服務器，降低運營開銷</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Docker Inc.是docker開源平台背後的公司，是docker生態系統的首席贊助商。通過像百度，BBC，eBay，Goldman，ING，Spotify的，和Yelp組織數万使用，Docker是分佈式應用程序的開放平台，允許開發人員和IT管理員建立，docker和在任何地方運行的應用程序。</p>
+
+<p>Docker社區初步完成集裝箱一切從負載平衡器數據庫計時服務以快速的步伐。這些構件可以輕鬆地部署和安排，有大量的安全性，性能和組織的好處。</p>
+
+<h2 id="rdbms">問題：無法持續增長的RDBMS</h2>
+
+<p>Docker 的集裝箱庫需要的是發現，並給予他們的絕對數量，決定了搜索是此功能的最佳用戶體驗。在傳統的RDBMS的初始搜索實現不是滿足性能和質量要求所需的docker。由於docker開發商肯·科克倫說：“我們之前用的數據庫，可以看到漂亮的限制。它被添加負載到我們的數據庫，並作為我們增加了越來越多的數據被越來越慢。”</p>
+
+<p>移動從他們的RDBMS遠在作出決定後，docker 評估既Elasticsearch和其他搜索技術。他們決定在Elasticsearch作為其下一代平台。</p>
+
+<p>在作出搬到Elasticsearch的決定，docker 接下來考慮所需的業務工作。像管理一個Elasticsearch分佈式數據庫提出了一些棘手的業務挑戰，如保持一個可行的法定人數，確保複製configured正確的高可用性和歸檔/備份管理。鑑於這些和其他的複雜性，決定做出自己的Elasticsearch基礎設施委託給一個完全託管提供商。</p>
+
+<h2 id="section-1">解決方案：隔離關鍵問題</h2>
+
+<p>Docker 通過查看各種不同的標準進行評價託管Elasticsearch可用的選項。據docker開發商約翰·科斯塔：“我們評估了一些其他託管Elasticsearch廠商在分析過程中，我們考慮的位置，索引（開發，運行，生產），可用資源（內存），高可用性選項和價格的一些彈性雲。是最好的選擇。“</p>
+
+<p>穩定的性能和可靠性是為docker關鍵問題，使得彈性雲的專用Elasticsearch集群非常適合兩個關鍵原因。首先，彈性雲的基礎上與保留的內存和CPU專用集群託管模式，給他們保證，他們的應用是一貫高性能。其次，雲服務器的高可用性選項給了docker加入保證了即使在一個完整的數據中心的情況下，停運自己的搜索數據庫將仍然可用。</p>
+
+<p>此外，dokcer 的指數配置要求是針對彈性雲架構一個良好的網絡連接。由於每個彈性雲客戶分配與它的使用沒有任何限制專用Elasticsearch集群，他們因為他們看到網絡自由分配指標。 基於容錯，及時的支持和易於操作的彈性雲符合我們的需求。</p>
+
+<h2 id="section-2">好處：進入生產</h2>
+
+<p>搬移在生產中受影響Elasticsearch性能提升docker一直在尋找。負載對他們的生產RDBMS下降顯著和搜索延遲和吞吐量進行了大量改進。此外，docker是能夠通過使用Elasticsearch的領域促進和功能評分查詢，以促進更多的流行和相關的搜索結果，大大提高了搜索結果的質量。</p>
+
+<p>部署在彈性雲docker指數的跑腿是快速和簡單。由於docker的約翰·科斯塔說：“搬移到生產很容易，因為它只需要我們添加一個信用卡賬單再抓生產設置，我們有關於索引，存儲設置和可靠性設置的幾個問題的彈性雲的支持。工作人員及時和詳細的在他們的反應。“</p>
+
+<p>在他們的新的基礎設施docker能夠更好地服務於搜索結果更快。這意味著更強的易用性使用docker平台的開發人員。對於此docker是至關重要的;一個工具，圍繞提供動力和便利性也必須有其具備這些特點的配套服務。最終，Elasticsearch已經證明了該公司一個強大的工具，幫助他們在他們的核心任務的重要組成部分提供：提供偉大的開發經驗。</p>
+
+
+                <p><a href="/blog/elk/devops/docker">[Read More]</a></p>
+                <div class="hline"></div>
+
+                <div class="spacing"></div>
+            
+                <! -- Blog Post -->
+                <a href="/blog/elk/devops/marvel">
+                    <img class="img-responsive" src="/assets/img/blog/bomb.jpg">
+                </a>    
+                <a href="/blog/elk/devops/marvel"><h3 class="ctitle">Marvel 簡介</h3></a>
+                <p><csmall>Jul 1, 2016. | By: Polin</csmall></p>
+                <p><img src="https://static-www.elastic.co/assets/blt79e06e220fb4c952/marvel-2-4-lg.jpg?q=635" alt="logo1" /></p>
+
+<h3 id="marvel-">Marvel 新功能</h3>
+<p>Marvel 是全新的設計。我們增加了多集群的支持，對監測數據的自動保留時間窗口，並與Elasticsearch和Kibana的最新版本集成了。</p>
+
+<h3 id="section">群集健康一覽</h3>
+<p>Marvel的概覽信息中心提供了有關群集的健康全部細節，包括集群範圍內的指標和事件，如碎片搬遷和恢復。</p>
+
+<h3 id="section-1">在文本度量</h3>
+<p>奇蹟收集集群範圍的事件，如創建索引，搜索速度，碎片的活動，和索引延遲。事件顯示無論是沿著他們的指標，可以讓你在同一時間看到互為因果在同一個地方，或在專用儀表盤，所以你可以深入探究的特定節點或索引。</p>
+
+<h3 id="section-2">實時和歷史分析</h3>
+<p>Marvel專用儀表盤允許的深層次指標廣泛收集分析，從機器級信息Elasticsearch內部的細節。奇蹟還存儲歷史數據，讓你潛入過去的問題一樣容易看到實時集群的性能。</p>
+
+<h3 id="section-3">以控制用的多組支持</h3>
+<p>Marvel 通過允許一個集中監控集群記錄和跟踪的健康和多個生產Elasticsearch集群的性能，簡化工作流程。</p>
+
+                <p><a href="/blog/elk/devops/marvel">[Read More]</a></p>
+                <div class="hline"></div>
+
+                <div class="spacing"></div>
+            
+                <! -- Blog Post -->
+                <a href="/blog/elk/devops/watcher">
+                    <img class="img-responsive" src="/assets/img/blog/bomb.jpg">
+                </a>    
+                <a href="/blog/elk/devops/watcher"><h3 class="ctitle">Watcher 簡介</h3></a>
+                <p><csmall>Jul 1, 2016. | By: Polin</csmall></p>
+                <h2 id="elasticsearch">Elasticsearch的報警功能</h2>
+<p>這樣你就不會錯過任何事情</p>
+
+<p>Watcher是Elasticsearch的警報和通知的產品，讓你把根據數據變化的行動。它是圍繞的原則，如果你能在Elasticsearch查詢東西，你可以在上面會發出提示。簡單地定義查詢，條件，計劃和採取的行動.</p>
+
+<h3 id="watcher">Watcher新的功能</h3>
+<p>Watcher的最新版本是Elasticsearch最新版本的兼容和功能鏈的投入，這使得它很容易在你的看板使用多個輸入，以及新的動作類型，可以很容易推通知常見問題跟踪方案，包括HipChat和Slack。</p>
+
+<h3 id="section">警惕異常數據中</h3>
+<p>觸發根據您快速變化的數據自動通知。通知不尋常的登錄失敗的IT部門中，打開一個支持票時，應用程序響應時間是高於平均水平，或者得到通知，如果發生意外錯誤。</p>
+
+<h3 id="elasticsearch-1">主動監視Elasticsearch集群</h3>
+<p>對觀察與Marvel保持你的Elasticsearch部署的脈衝。獲取當節點加入或離開集群，當在每秒查詢秒殺，如果內存使用率過高等通知。</p>
+
+<h3 id="section-1">得到通知您希望的方式</h3>
+<p>輕鬆設置電子郵件警報事件發生的時候，還是守望通過網絡掛接集成到現有的監測系統將警報發送到JIRA，HipChat，PagerDuty，Slack等。</p>
+
+<h3 id="section-2">分析您的觀看紀錄</h3>
+<p>深入了解如何守望者由Kibana可視化你的“看”的歷史表現。您還可以創建嵌套表或多層的通知，其中一個警報可以觸發另一種類型的手錶。</p>
+
+<h3 id="watcher-1">從安全到營銷，Watcher可以幫助</h3>
+<p>無論您是想在保持對內部系統的完整性脈衝，如果支持請求會通過屋頂，或者最新的營銷活動正在駕駛記錄您的網站流量，觀察會讓你知道。</p>
+
+<h3 id="elasticsearch-2">它的高可用性，就像Elasticsearch</h3>
+<p>您的警報和通知的基礎設施應該是可靠的。守望運行作為你的Elasticsearch集群的一部分，所以它的彈性硬件和網絡故障 - 它不會讓你失望</p>
+
+                <p><a href="/blog/elk/devops/watcher">[Read More]</a></p>
+                <div class="hline"></div>
+
+                <div class="spacing"></div>
+            
+                <! -- Blog Post -->
+                <a href="/blog/elk/devops/shield">
+                    <img class="img-responsive" src="/assets/img/blog/bomb.jpg">
+                </a>    
+                <a href="/blog/elk/devops/shield"><h3 class="ctitle">Shield 簡介</h3></a>
+                <p><csmall>Jul 1, 2016. | By: Polin</csmall></p>
+                <p>##Elasticsearch的安全機制
+- 利用Shield保護數據</p>
+
+<p>隨著快速採用Elasticsearch，這是比以往更容易存儲，搜索和分析數據。shields可以讓你輕鬆地保護這些數據用一個用戶名和密碼，同時簡化您的架構。例如加密，基於角色的訪問控制，IP過濾和審計先進的安全功能也可當你需要他們。</p>
+
+<p><img src="https://static-www.elastic.co/assets/blt83966820b2eef517/shield-triad.png?q=635" alt="logo" /></p>
+
+<h2 id="shields-">shields 新功能</h2>
+<p>shields 現在包括Kibana插件，設有登陸界面和會話支持為整個堆疊彈性的安全。最近的顯著特點還包括一個配置API，現場和文檔級安全性和可擴展的框架領域實現自定義集成。</p>
+
+<h3 id="elasticsearch">驗證：保護Elasticsearch用用戶名和密碼</h3>
+<p>您的數據是企業的命脈;保護它無意修改或未經授權的訪問是當務之急。盾可以很容易地密碼保護您的Elasticsearch集群。 Active Directory和LDAP的支持是包括在內。</p>
+
+<h3 id="kibana">登錄和Kibana會話管理</h3>
+<p>盾包含Kibana插件，提供用戶身份驗證和會話的支持，使得它比以往任何時候都充分保護Kibana容易。</p>
+
+<h3 id="section">簡化您的集成防護體系</h3>
+<p>避免建設，維護和測試一個外部的安全解決方案。盾緊密集成Elasticsearch，驗證每一個請求，並在不犧牲安全性，提供最佳的性能。你的時間應該花在構建應用程序或分析你的數據，不必擔心安全性。</p>
+
+<h3 id="section-1">基於角色的訪問控制：給正確的訪問給合適的人</h3>
+<p>盾，可以配置誰可以在Elasticsearch集群內做什麼。創建用於IT /運營團隊，可以看到群集運行狀況，但不能訪問任何數據監控賬戶。授予只讀訪問您的Kibana用戶，甚至只對特定的索引授權訪問支持多租戶。</p>
+
+<h3 id="section-2">現場和文檔級安全性</h3>
+<p>獲取顆粒與Elasticsearch您的基於角色的訪問控制。盾可以限制訪問在Elasticsearch各個字段，並阻止用戶訪問與真正的文檔級安全敏感文件。</p>
+
+<h3 id="ip">加密通信和IP過濾：保護線路上您的數據</h3>
+<p>SSL / TLS加密是保護你的數據在飛行的最佳途徑。盾可以很容易地防止窺探或通過加密節點到節點和客戶端通信篡改。盾也可以阻止未經批准的主機從加入或使用IP過濾與群集進行通信。</p>
+
+<h3 id="elasticsearch-1">審計日誌記錄：跟踪所有試圖訪問Elasticsearch</h3>
+<p>盾可以幫助你達到並超過了各種安全規定和要求。無論是HIPAA，PCI DSS，FISMA，ISO，或者你的內部政策，盾有你覆蓋了所有的系統和用戶活動的完整記錄。</p>
+
+
+                <p><a href="/blog/elk/devops/shield">[Read More]</a></p>
+                <div class="hline"></div>
+
+                <div class="spacing"></div>
+            
+                <! -- Blog Post -->
+                <a href="/blog/elk/devops/hadoop">
+                    <img class="img-responsive" src="/assets/img/blog/bomb.jpg">
+                </a>    
+                <a href="/blog/elk/devops/hadoop"><h3 class="ctitle">Elasticsearch for Hadoop</h3></a>
+                <p><csmall>Jul 1, 2016. | By: Polin</csmall></p>
+                <h1 id="immediate-insight">Immediate Insight</h1>
+
+<h2 id="section">新功能</h2>
+<p>最近ES-的Hadoop發行版與Elasticsearch 2.X兼容，支持最新的星火1.6功能，如下推過濾，並用彈性雲加上其他Elasticsearch雲部署更好地工作。</p>
+
+<p><img src="https://static-www.elastic.co/assets/bltc0e7de6e02236a46/eshadoop-diagram.png?q=635" alt="haddop" /></p>
+
+<h3 id="elasticsearchhadoop">Elasticsearch和Hadoop之間無縫移動數據</h3>
+<p>隨著本地集成和豐富的查詢API，ES-的Hadoop可以讓你的索引數據直接導入Elasticsearch從Hadoop的，從Hadoop的查詢Elasticsearch，並使用HDFS作為一個Elasticsearch長期歸檔。</p>
+
+<h3 id="hadoop">第二搜索查詢，並在Hadoop數據分析</h3>
+<p>雖然Hadoop的讓你批，加盟，並分析你的心臟的內容，它的查詢是不是最快的。 ES-的Hadoop提供了一個橋樑索引你的Hadoop數據導入Elasticsearch改變了遊戲規則，讓您充分利用其查詢的速度，各種聚合功能，而且比以往任何時候都更快地能從中得到價值的能力。</p>
+
+<h3 id="hadoop-1">原生集成與最流行的Hadoop組件</h3>
+<p>Hadoop的有一個廣闊的生態系統，ES-的Hadoop與您喜愛的組件本身進行交互。利用ES-的Hadoop與Spark彈性分佈式數據集（RDD）和DataFrames, 協調Elasticsearch以提高你的學習機使用的情況下，聯合整個Elasticsearch和HDFS查詢與Hive，並直接與其他各種流行的系統，如Storm, Pig, Cascading，並且標準的MapReduce。</p>
+
+<p><img src="https://www.elastic.co/assets/blt7b581632cee445e1/hadoop-logos-flexibility.png" alt="logo" /></p>
+
+<h3 id="kibanahdfs">在實時與Kibana可視化數據HDFS</h3>
+<p>Elasticsearch適用於Kibana幫助您直觀地探索實時的大數據。隨著設計精美的圖形，圖表和地圖，Kibana將您的數據轉換成實時的，可定制的儀表盤的深刻見解。</p>
+
+<h3 id="section-1">增強的大數據安全性</h3>
+<p>管理誰有權訪問你的數據，防止窺探過線以保持數據的保密性。 ES-Hadoop的增強的安全性，包括基本的HTTP驗證，為SSL / TLS支持Elasticsearch和Hadoop集群之間的連接，同時還與支持Kerberos的Hadoop和啟用盾Elasticsearch集群工作。</p>
+
+<h3 id="hadoop-2">與Hadoop發行的版本完全兼容</h3>
+<p>我們是Cloudera的，MAPR，Hortonworks，Databricks和並發官方合作夥伴，所以無論你正在使用Hadoop的香草或其他分派，我們已經得到了你覆蓋。我們正在Cloudera的企業5和認證技術合作夥伴與Hortonworks認證。</p>
+
+<p><img src="https://www.elastic.co/assets/bltd62c60eb22a9bf52/hadoop-logos-distribution.png" alt="logo2" /></p>
+
+
+                <p><a href="/blog/elk/devops/hadoop">[Read More]</a></p>
+                <div class="hline"></div>
+
+                <div class="spacing"></div>
+            
+                <! -- Blog Post -->
+                <a href="/blog/elk/devops/beats">
+                    <img class="img-responsive" src="/assets/img/blog/bomb.jpg">
+                </a>    
+                <a href="/blog/elk/devops/beats"><h3 class="ctitle">Beats 簡介</h3></a>
+                <p><csmall>Jul 1, 2016. | By: Polin</csmall></p>
+                <h2 id="data-shippers-for-elasticsearch">Data Shippers for Elasticsearch</h2>
+
+<p>Beats 是構建輕量級的開源的數據ship,主要與Logstash更多源，在Elasticsearch的search 和分析，並在可視化Kibana多種類型的數據的平台。無論您是在日誌文件中，基礎設施指標，或網絡數據包，保持一個數據的基礎。</p>
+
+<h3 id="beats">Beats的新功能？</h3>
+<p>現在Beats更容易配置和我們介紹Winlogbeat，系統，應用程序和Windows事件日誌安全信息的輕量級shipper。還增加了自動Elasticsearch模板載入，在Filebeat多行的支持，並篩選的輸出能力</p>
+
+<h3 id="filebeat">Filebeat：實時分析日誌文件</h3>
+<p>準備好下一代Logstash轉發：Filebeat。 Filebeat收集，預處理過程，並轉發日誌從遠程源文件，使他們能夠進一步豐富和使用Logstash其他數據源相結合。</p>
+
+<h3 id="metricbeatship">Metricbeat：ship所有指標</h3>
+<p>Metricbeat提取一組關於從操作系統服務的預定間隔等指標Apache Web服務器，Redis的，和更多的指標。</p>
+
+<h3 id="packetbeat">Packetbeat：收集你的網路數據</h3>
+<p>網絡數據可以告訴你什麼在你的應用程序正在進行的詳細故事。 Packetbeat是專為網絡，數據庫和其他網絡協議提供實時分析的一個開源項目。無論你在IT運營，安全性或業務分析師的時候，你可以迅速地通過添加新的協議，指標和分析擴展Packetbeat的功能。</p>
+
+<h3 id="winlogbeatwindows">Winlogbeat：從Windows事件日誌收集洞察</h3>
+<p>安全帶系統，應用程序和安全信息從Windows事件日誌採用了輕量化Winlogbeat數據採集器的豐富性。shipper 事件直接Elasticsearch或解析和使用Logstash在Kibana可視化結果.</p>
+
+<h3 id="topbeat">Topbeat：收集基礎設施指標</h3>
+<p>資源利用率防禦IT運營的第一線。 Topbeat被設計為輕量的方法來收集的CPU，存儲器，和其它每個進程和系統範圍內的數據，然後運送它Elasticsearch來分析結果。</p>
+
+<h3 id="libbeatbeats-">Libbeat：為建構更beats 庫</h3>
+<p>每一個Beats的基礎是libbeat，建立Elasticsearch數據shipper主開源框架。至於轉發基於主機的指標Elasticsearch的公共庫，libbeat是必不可少的組成部分，可以讓任何人輕鬆地開發其他的Beats。</p>
+
+
+                <p><a href="/blog/elk/devops/beats">[Read More]</a></p>
+                <div class="hline"></div>
+
+                <div class="spacing"></div>
+            
+                <! -- Blog Post -->
+                <a href="/blog/elk/devops/kibana">
+                    <img class="img-responsive" src="/assets/img/blog/bomb.jpg">
+                </a>    
+                <a href="/blog/elk/devops/kibana"><h3 class="ctitle">Kibana 簡介</h3></a>
+                <p><csmall>Jul 1, 2016. | By: Polin</csmall></p>
+                <h2 id="kibana">Kibana</h2>
+<blockquote>
+  <p>探索與可視化您的數據
+看到您的數據價值</p>
+</blockquote>
+
+<ul>
+  <li>靈活的分析和可視化平台</li>
+  <li>實時匯總和數據流的圖表</li>
+  <li>直觀的界面，為各種用戶</li>
+  <li>即時共享和儀表板的嵌入</li>
+</ul>
+
+<h3 id="elasticsearch">無縫集成Elasticsearch</h3>
+<p>搭建的Elasticsearch工作，Kibana給人形狀任何類型的數據 - 結構化和非結構化 - 索引到Elasticsearch。這也從Elasticsearch強大的搜索和分析能力中受益。</p>
+
+<h3 id="section">給您的數據提供外觀</h3>
+<p>為了更好地理解大量的數據，很容易地創建柱狀圖，線，散點圖，柱狀圖，餅狀圖和地圖。</p>
+
+<h3 id="section-1">複雜的分析</h3>
+<p>提供Elasticsearch超強的分析能力，智能分析數據，進行數學變換，和切片和切塊你的數據，你認為合適。</p>
+
+<h3 id="section-2">讓更多的團隊成員收益</h3>
+<p>在強大的接口數據的可視化使企業的每一行，以實際使用的數據收集。</p>
+
+<h3 id="section-3">靈活的界面，易於分享</h3>
+<p>輕鬆創建，保存，共享和嵌入您的可視化數據進行快速和智能通信。</p>
+
+<h3 id="section-4">簡易安裝</h3>
+<p>簡單友好的設置和啟動。 Kibana 擁有自己的Web服務器，以幫助您快速建立和運行。</p>
+
+<h3 id="section-5">從許多來源的數據可視化</h3>
+<p>輕鬆地可視化從Logstash，ES-Hadoop的，beats，或第三方的技術，如Apache的Flume，Fluentd，和其他推入Elasticsearch數據。</p>
+
+<h3 id="section-6">簡單的數據導出</h3>
+<p>輕鬆導出數據的有趣位合併，與其他數據集融合，快速推出新的分析和發現新的東西。</p>
+
+<h3 id="elasticsearch-rest-api">視覺與互動Elasticsearch REST API的</h3>
+<p>一個可視化控制台，提供自動完成，自動縮進和語法檢查所有通過Kibana插件。加強你與Elasticsearch的API現在安裝的交互方式。</p>
+
+                <p><a href="/blog/elk/devops/kibana">[Read More]</a></p>
+                <div class="hline"></div>
+
+                <div class="spacing"></div>
+            
+                <! -- Blog Post -->
+                <a href="/blog/elk/devops/logstash">
+                    <img class="img-responsive" src="/assets/img/blog/bomb.jpg">
+                </a>    
+                <a href="/blog/elk/devops/logstash"><h3 class="ctitle">Logstash 簡介</h3></a>
+                <p><csmall>Jun 30, 2016. | By: Polin</csmall></p>
+                <h2 id="logstash">Logstash</h2>
+<blockquote>
+  <p>Collect, Enrich &amp; Transport Data
+Process Any Data, From Any Source</p>
+</blockquote>
+
+<ul>
+  <li>集中所有類型的數據處理</li>
+  <li>不同正常化模式和格式</li>
+  <li>迅速擴展到自定義日誌格式</li>
+  <li>鬆添加自定義數據源插件</li>
+</ul>
+
+<h3 id="section">集中所有類型的數據處理</h3>
+<p>Logstash是一個數據管道，可以幫助您從各種系統處理日誌和其他事件數據。用超過200種的插件及數量，Logstash可以在刻度連接到各種源和流數據到中央分析系統。</p>
+
+<h3 id="schema">規範化schema</h3>
+<p>關鍵業務數據往往分散在不同的系統之間，各自在自己的格式。 Logstash允許您解析這些數據，將其插入您的分析所選擇的數據存儲之前，匯聚在一個共同的格式。</p>
+
+<h3 id="section-1">延伸到自定義日誌格式</h3>
+<p>通過基礎設施和應用程序編寫的大多數日誌的自定義格式。 Logstash提供了一個方便快捷的方式來定制邏輯的大規模分析這些日誌。</p>
+
+<h3 id="section-2">添加插件自定義來源</h3>
+<p>內置具有可擴展性，Logstash規定由社區迅速插件開發的API。最近改進了插件的生態系統，貢獻者可以隨時發布新插件。</p>
+
+                <p><a href="/blog/elk/devops/logstash">[Read More]</a></p>
+                <div class="hline"></div>
+
+                <div class="spacing"></div>
+            
+                <! -- Blog Post -->
+                <a href="/blog/elk/devops/elasticsearch">
+                    <img class="img-responsive" src="/assets/img/blog/bomb.jpg">
+                </a>    
+                <a href="/blog/elk/devops/elasticsearch"><h3 class="ctitle">Elasticsearch 介紹</h3></a>
+                <p><csmall>Jun 29, 2016. | By: Polin</csmall></p>
+                <h2 id="search--analyze-data-in-real-time">Search &amp; Analyze Data in Real Time</h2>
+
+<ul>
+  <li>分佈式，可擴展，高度可用</li>
+  <li>實時搜索和分析能力</li>
+  <li>複雜的RESTful API</li>
+</ul>
+
+<h3 id="section">實時數據</h3>
+<p>多久你可以等待你的快速移動數據的見解？隨著Elasticsearch，所有數據都將立即提供搜索和分析。</p>
+
+<h3 id="section-1">實時高級分析</h3>
+<p>與分析的力量相結合搜索的速度變化與您的數據的關係。交互式搜索，發現和分析獲得改善你的產品或簡化你的業務洞察力。</p>
+
+<h3 id="section-2">大規模分佈式</h3>
+<p>Elasticsearch允許您開始小和你的成長水平擴展。只需添加更多的節點，並讓集群自動採取額外的硬件優勢。 PB級數據？數千個節點？沒問題。</p>
+
+<h3 id="section-3">高可用性</h3>
+<p>Elasticsearch集群是有彈性的 - 他們會自動檢測到新的或失敗的節點，以及重組和重新平衡數據，以確保您的數據安全和方便。</p>
+
+<h3 id="section-4">多群組</h3>
+<p>集群可能包含可以獨立或作為一組進行查詢多個索引。指數別名，篩選視圖索引，並可透明地更新到你的應用程序。</p>
+
+<h3 id="section-5">全文搜索</h3>
+<p>Elasticsearch建立分佈在Apache Lucene之上的功能，以提供最強大的全文本搜索功能可用。功能強大，開發者友好的查詢API支持多語言搜索，地理定位，內容做了，你均值的建議，自動完成和結果片斷。</p>
+
+<h3 id="section-6">文檔導向</h3>
+<p>存儲Elasticsearch複雜的現實世界實體的結構化JSON文件。所有字段默認情況下，索引，所有的索引可以在一個單一的查詢中使用，可以輕鬆地以驚人的速度返回複雜的結果。</p>
+
+<h3 id="section-7">免寫複雜的程式</h3>
+<p>Elasticsearch讓你上手很快。只要指數JSON文檔，它會自動檢測數據結構和類型，創建一個索引，使您的數據進行搜索。您還可以完全控制來定制你的數據是如何編制索引。</p>
+
+<h3 id="restapi">開發者友好，基於REST的API</h3>
+<p>Elasticsearch是API驅動。幾乎可以通過使用JSON over HTTP的一個簡單的RESTful API執行任何動作。客戶端庫可用於許多編程語言。</p>
+
+<h3 id="section-8">資料保存持久性</h3>
+<p>Elasticsearch首先將您的數據安全。文件更改記錄在事務日誌在多個節點集群中，以盡量減少任何數據丟失的可能性。</p>
+
+<h3 id="apache-2">Apache 2的開源許可證</h3>
+<p>Elasticsearch可以下載，使用和收費改性。它可以在Apache 2許可，提供最靈活的開源許可證之一。</p>
+
+<h3 id="apache-lucene">構建基於Apache Lucene的™頂部</h3>
+<p>Apache Lucene是一個高性能，全功能的信息檢索庫，用Java編寫的。 Elasticsearch使用Lucene的內部建立自己的藝術分佈式搜索和分析能力的狀態。</p>
+
+
+                <p><a href="/blog/elk/devops/elasticsearch">[Read More]</a></p>
+                <div class="hline"></div>
+
+                <div class="spacing"></div>
+            
+                <! -- Blog Post -->
+                <a href="/blog/elk/devops/elk-overview">
+                    <img class="img-responsive" src="/assets/img/blog/bomb.jpg">
+                </a>    
+                <a href="/blog/elk/devops/elk-overview"><h3 class="ctitle">OverView for ELK stack</h3></a>
+                <p><csmall>Jun 29, 2016. | By: Polin</csmall></p>
+                <p>The Elastic Stack
+Make Sense of Your Data 讓您的數據的更有意義</p>
+
+<p>開源的Elastic Stack 包含- Elasticsearch，Kibana，Logstash和Beats - 幫助您從任何來源，任何格式和搜索，分析獲取數據，並實時進行可視化。其他的產品像Shield（安全），Watcher（報警），Marvel（監控），圖表和報告（即將推出）的產品提供什麼是可能與堆棧。而且你可以將它部署所有的服務或使用上的彈性雲。</p>
+
+<h2 id="elasticsearch">Elasticsearch</h2>
+
+<p>Elasticsearch是一個分佈式的，開放源碼的搜索和分析引擎，專為橫向擴展性，可靠性，易管理。它通過覆蓋結構化，非結構化和時間序列數據的複雜，開發者友好的查詢語言，結合了強大的分析功能搜索的速度。</p>
+
+<h2 id="logstash">Logstash</h2>
+
+<p>Logstash是一個靈活的，開放源碼的數據採集，豐富和輸送管線。隨著連接器易於集成通用基礎設施，Logstash旨在有效地處理日誌，事件和分發非結構化數據源的不斷增多成各種輸出，包括Elasticsearch。</p>
+
+<h2 id="kibana">Kibana</h2>
+
+<p>Kibana是一個開源的數據可視化平台，使您可以通過驚人的，強大的圖形數據進行交互。從直方圖到geomaps，Kibana與可組合成定制的儀表板，幫助您從數據看板分享見解的視覺效果帶給您的數據的生命。</p>
+
+<h2 id="beats">Beats</h2>
+
+<p>Beats 是Elasticsearch開源的數據shipper的未來。從網絡數據包的日誌文件，基礎設施的數據，超越，Beats是構建各種輕量shipper主來幫助你利用你喜歡的任何類型的數據的平台。</p>
+
+<h2 id="elasticsearch-for-apache-hadoop">Elasticsearch for Apache Hadoop</h2>
+
+<p>Elasticsearch為Apache Hadoop的 - 也被稱為ES-Hadoop的 - 是一個雙向的連接器，讓您讀取和寫入數據到Elasticsearch並實時查詢。 ES-Hadoop是一個強大的解決方案，可幫助您充分利用這兩種Hadoop和Elasticsearch的力量。</p>
+
+<h2 id="elastic-cloud">Elastic Cloud</h2>
+
+<p>部署秒AWS自己Elasticsearch集群。一個完全託管和管理解決方案，雲服務器，使供電搜索，記錄或分析易如反掌。這是一個快速，可擴展和可靠的解決方案，開發人員友好並與我們的商業插件集成。</p>
+
+<h2 id="shield">Shield</h2>
+
+<p>shield 帶來了企業級安全Elasticsearch，保護整個緊ELK帶加密通信，身份認證，基於角色的訪問控制和審計。今天的設計，以解決不斷增長的業務安全需求，盾提供安心為您Elasticsearch數據。</p>
+
+<h2 id="watcher">Watcher</h2>
+
+<p>Watcher 是Elasticsearch的警報和通知的產品。如果你可以查詢它，你可以提醒就可以了。從主動監控Elasticsearch來提醒您在異常你的日誌，看守讓你把根據數據變化的行動。</p>
+
+<h2 id="marvel">Marvel</h2>
+
+<p>Marvel 是一個綜合性的工具，為您提供完全透明到Elasticsearch部署的狀態。監視活動在您Elasticsearch集群，快速診斷問題，並發現如何微調和優化性能，以獲得最大的收益。</p>
+
+<h2 id="graph">Graph</h2>
+
+<p>圖表介紹了去發現和探索，通過添加相關性的探索住在你的數據之間的關係的新途徑。</p>
+
+<h2 id="language-clients">Language Clients</h2>
+
+<p>彈性提供了語言的客戶端為Elasticsearch，包括Ruby，Python和PHP，Perl中，.NET，Java和JavaScript和更多的主機。創建易於使用和高效，我們的語言的客戶端旨在幫助您使用在你所講的語言軟件。</p>
+
+
+                <p><a href="/blog/elk/devops/elk-overview">[Read More]</a></p>
+                <div class="hline"></div>
+
+                <div class="spacing"></div>
+            
+                <! -- Blog Post -->
+                <a href="/blog/elk/devops/elk-10concept">
+                    <img class="img-responsive" src="/assets/img/blog/bomb.jpg">
+                </a>    
+                <a href="/blog/elk/devops/elk-10concept"><h3 class="ctitle">10 Elasticsearch Concepts You Need to Learn</h3></a>
+                <p><csmall>Jun 28, 2016. | By: Polin</csmall></p>
+                <p><img src="http://logz.io/wp-content/uploads/2016/06/elastic.png" alt="" /></p>
+
+<p>依據ELK的10大特點分別說明如下：</p>
+
+<h2 id="fields">1. Fields</h2>
+
+<p>字段是在Elasticsearch數據的最小單個的單元。每個字段有一個定義的類型和包含數據的一個單件，可以是，例如，一個布爾，字符串或數組表達。字段集合在一起的單一Elasticsearch文檔。</p>
+
+<p>與Elasticsearch2.x版本開始，字段名不能包含特殊字符開始，並且不能包含點。</p>
+
+<h2 id="documents">2. Documents</h2>
+<p>文件是存儲一個Elasticsearch索引中，並且被認為存儲的基本單元JSON對象。在關係型數據庫的世界中，文件可以比在表中的一行。</p>
+
+<p>例如，讓我們假設你正在運行的電子商務應用。你可以有每個產品一個文檔或每一個訂單一個文檔。沒有限制多少文件，你可以在一個特定的索引存儲。</p>
+
+<p>在文檔中的數據與由鍵和值的字段中定義。一個關鍵是字段的名稱和一個值可以是許多不同類型的項目，例如一個字符串，一個號碼，一個布爾表達式，另一個目的，或值的數組。</p>
+
+<p>文檔中還含有構成文檔元數據，如保留字段：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>* _index - 索引文件所在的所在
+* _type - 該文件表示類型
+* _id - 文檔的唯一標識符
+</code></pre>
+</div>
+
+<p>一個文件的範本</p>
+
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="p">{</span>
+   <span class="s2">"_id"</span><span class="err">:</span> <span class="mi">3</span><span class="p">,</span>
+   <span class="err">“</span><span class="nx">_type</span><span class="err">”:</span> <span class="p">[</span><span class="err">“</span><span class="nx">user</span><span class="err">”</span><span class="p">],</span>
+   <span class="s2">"age"</span><span class="err">:</span> <span class="mi">28</span><span class="p">,</span>
+   <span class="s2">"name"</span><span class="err">:</span> <span class="p">[</span><span class="s2">"daniel”],
+   "</span><span class="nx">year</span><span class="err">":</span><span class="mi">1989</span><span class="p">,</span> 
+<span class="p">}</span></code></pre></figure>
+
+<h2 id="types">3. Types</h2>
+
+<p>Elasticsearch類型的文件中使用細分類似類型的數據，其中每個類型表示一個唯一的類的文件。類型由一個名稱以及映射（見下文）並通過添加_type領域被使用。查詢特定類型時，該字段可以被用於過濾。</p>
+
+<p>索引可具有任何數目的類型，並且可以存儲在同一個索引屬於這些類型的文件。</p>
+
+<h2 id="mapping">4. Mapping</h2>
+
+<p>像在關係數據庫的世界的模式，映射定義駐留在索引內的不同的類型。它定義為特定類型的文件的字段 - 數據類型（如串和整數），以及如何字段應該被索引並存儲在Elasticsearch。</p>
+
+<p>一個映射可以明確定義或文檔時使用模板索引自動生成。 （模板包括設置和映射，可以自動應用到一個新的索引。）</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># Example
+curl -XPUT localhost:9200/example -d '{
+  "mappings": {
+    "mytype": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "age": {
+          "type": "long"
+        }
+      }
+    }
+  }
+}'
+</code></pre>
+</div>
+
+<h2 id="index">5. Index</h2>
+<p>Indices，在Elasticsearch最大的數據單元，是文件的邏輯分區，可相比於關係數據庫世界的數據庫。</p>
+
+<p>繼續我們的電子商務應用的例子，你可以有一個包含所有相關的產品和其他所有相關客戶數據的數據的一個索引。</p>
+
+<p>只要你想，你可以在Elasticsearch定義為多指數。反過來，這些都會認為是唯一的每個索引文件。</p>
+
+<p>Indices是由指的是執行針對各指數裡面的文件操作（如搜索和刪除）操作小寫名稱標識。</p>
+
+<h2 id="shards">6. Shards</h2>
+<p>簡單地說，shards 是一個單一的Lucene索引。他們是Elasticsearch的積木，並且是什麼促進其可擴展性。</p>
+
+<p>index 的大小是Elasticsearch崩潰的常見原因。由於沒有限制多少文檔可以在每個索引存儲，index可能需要的超過了託管服務器的限度磁盤空間的量。一旦指數接近這個極限，索引將開始失敗。</p>
+
+<p>為解決這一問題的方法之一是在水平方向分割指數成片稱為shards。這使您可以跨shards和nodes分發操作，以提高性能。</p>
+
+<p>當您創建一個index，你可以定義你要多少shards。每個shards是可以在任何地方你的群集託管一個獨立的Lucene索引：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># Example
+curl -XPUT localhost:9200/example -d '{
+  "settings" : {
+    "index" : {
+      "number_of_shards" : 2, 
+      "number_of_replicas" : 1 
+    }
+  }
+}'
+</code></pre>
+</div>
+
+<h2 id="replicas">7. Replicas</h2>
+
+<p>Relicas，顧名思義，是Elasticsearch故障安全機制和基本上索引的shards的副本。這為有用備份系統 - 或，換句話說，當節點崩潰。副本也服務讀請求，因此增加的副本可以幫助提高搜索性能。</p>
+
+<p>以確保高可用性，複製品不放在同一個節點與原始shards（稱為“主”shards）從它們被複製在。</p>
+
+<p>像與shards，複製品的數量可以每索引創建索引時定義。不像碎片，但是，您可能隨時創建索引後更改副本的數量。</p>
+
+<p>參見上面的“碎片”部分中的例子。</p>
+
+<h2 id="analyzers">8. Analyzers</h2>
+
+<p>Analyzers 為索引短語或表達式分解成術語時使用。索引中定義，Analyzers由一個單一的標記生成器和任意數量的記號過濾的。例如，遇到一個具體體現，當一個標記可能分裂字符串轉換成明確定義的術語。</p>
+
+<p>默認情況下，Elasticsearch將適用“標準”的analyzers，其中包含一個基於語法的標記生成器，消除常見的英語單詞和適用附加的過濾器。 Elasticsearch也有一系列內置斷詞的捆綁，以及，你也可以使用自定義的標記生成器。</p>
+
+<p>語法過濾器用於過濾或修改某些標記。例如，ASCII折疊式過濾器將轉換成字符，如 ê, é, è to e.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># Example
+curl -XPUT localhost:9200/example -d '{
+  "mappings": {
+    "mytype": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "analyzer": "whitespace"
+        }
+      }
+    }
+  }
+}'
+</code></pre>
+</div>
+
+<h2 id="nodes">9.Nodes</h2>
+<p>任何ELK設置的心臟是Elasticsearch實例，它具有存儲和索引數據的重要任務。</p>
+
+<p>在一個集群中，不同的責任分配給各個節點類型：
+- 數據節點(Data nodes) - 存儲數據並執行數據相關的操作，如搜索和聚合
+- 主節點(Master nodes) - 負責集群範圍內的管理和配置操作，比如添加和刪除節點
+- 客戶機節點(Client nodes) - 轉發簇請求到主節點和數據相關的請求到數據節點
+- 部落節點(Tribe nodes) - 作為一個客戶端節點，執行讀取和集群中的編寫針對所有節點的操作
+- 食入節點（Ingestion nodes) 這是Elasticsearch 5.0新 - 用於索引前預處理文件</p>
+
+<p>默認情況下，每個節點被自動分配一個唯一的標識符或名稱，是用於管理目的，並在多節點變得更加重要，或群集，環境。</p>
+
+<p>安裝時，一個節點將形成題為一個新的單節點集群“elasticsearch”，但它也可以使用群集名稱配置為加入現有群集（見下文）。不用說，這些節點需要能夠識別彼此能夠連接。</p>
+
+<p>在開發或測試環境中，您可以在一台服務器上建立多個節點。在生產中，然而，由於該一Elasticsearch節點消耗的資源量，建議有一個單獨的服務器上運行的每個Elasticsearch實例。</p>
+
+<h2 id="section">10.集群</h2>
+<p>一個Elasticsearch集群由一個或多個Elasticsearch節點。與節點，每個集群具有一個唯一的標識符，必須通過嘗試加入群集的任何節點可使用。默認情況下，群集名稱為“elasticsearch”，但是這個名字是可以改變的，當然。</p>
+
+<p>集群中的一個節點是“主”節點，這是負責的集群範圍內的管理和配置操作（如添加和刪除節點）。該節點是由群集自動選擇，但如果失敗，是可以改變的。 （見上文對其他類型的集群中的節點。）</p>
+
+<p>集群中的任何節點都可以進行查詢，包括“主”節點。但是，節點也向前查詢到包含被查詢的數據的節點。</p>
+
+<p>隨著集群的增長，它會自行重組來傳播數據。</p>
+
+<p>還有一些有用的簇的API可以查詢群集的一般狀態。</p>
+
+<p>例如，群集健康API返回的任一的“綠色”健康狀態報告（所有碎片分配），“黃”（主碎片被分配但複製品都沒有），或“紅”（碎片沒有在分配的簇）。更多關於群集API是在這裡。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># Output Example
+{
+  "cluster_name" : "elasticsearch",
+  "status" : "yellow",
+  "timed_out" : false,
+  "number_of_nodes" : 1,
+  "number_of_data_nodes" : 1,
+  "active_primary_shards" : 5,
+  "active_shards" : 5,
+  "relocating_shards" : 0,
+  "initializing_shards" : 0,
+  "unassigned_shards" : 5,
+  "delayed_unassigned_shards" : 0,
+  "number_of_pending_tasks" : 0,
+  "number_of_in_flight_fetch" : 0,
+  "task_max_waiting_in_queue_millis" : 0,
+  "active_shards_percent_as_number" : 50.0
+}
+</code></pre>
+</div>
+
+<p><img src="http://logz.io/blog/10-elasticsearch-concepts/?utm_source=facebook&amp;utm_medium=social&amp;utm_content=10_elasticsearch_concepts&amp;utm_campaign=blog_post" alt="logz.io" /></p>
+
+
+                <p><a href="/blog/elk/devops/elk-10concept">[Read More]</a></p>
+                <div class="hline"></div>
+
+                <div class="spacing"></div>
+            
+                <! -- Blog Post -->
+                <a href="/blog/devops/nmon/nmons">
+                    <img class="img-responsive" src="/assets/img/blog/nmon-plus.png">
+                </a>    
+                <a href="/blog/devops/nmon/nmons"><h3 class="ctitle">NMONS + iPOC30 維運分析平台</h3></a>
+                <p><csmall>Jun 9, 2016. | By: Polin</csmall></p>
+                <p>devops_Learning         ibm.tar.gz              solid-1                 ttpoc_web               unixformat
+# linux nmon 和 top 的log 收集方案</p>
+
+<blockquote>
+  <p>利用IBM linux 的nmon 命令和linux 自帶的top 命令收集performance log， 並且利用ftp定時發送log 到 log server 中。</p>
+</blockquote>
+
+<h2 id="linux-log-server-">linux log server 的系統結構</h2>
+
+<p><img src="/assets/img/linux_ftp.png" alt="設定的內容" /></p>
+
+<h2 id="nmontop-log-shell-script">收集nmon&amp;top log 的shell script:</h2>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ cat /opt/nmons/nmons-collect.sh
+#!/bin/bash
+nmonDir="/opt/nmon"
+nmonTool=/opt/nmon/nmon_linux_x86
+#nmonDir=`cat /etc/passwd | grep ^nsadmin | awk -F ':' '{ print $(NF -1) }'`
+#nmonTool=$adpath/nmon/nmon_x86_64_ubuntu1104
+
+echo $nmonDir
+host=`hostname | awk -F"." '{print $1}'`
+today=`date +%y%m%d`
+count=1440
+top -d 60 -n $count -b -i &gt; $nmonDir/$host\_$today.top &amp;
+$nmonTool -f -N -t -s 60 -c $count -m $nmonDir
+
+</code></pre>
+</div>
+
+
+                <p><a href="/blog/devops/nmon/nmons">[Read More]</a></p>
+                <div class="hline"></div>
+
+                <div class="spacing"></div>
+            
+                <! -- Blog Post -->
+                <a href="/blog/ipoc/nmon/devops">
+                    <img class="img-responsive" src="/assets/img/blog/bomb.jpg">
+                </a>    
+                <a href="/blog/ipoc/nmon/devops"><h3 class="ctitle">NMONS 維運分析平台</h3></a>
+                <p><csmall>May 9, 2016. | By: Polin</csmall></p>
+                <p>devops_Learning         ibm.tar.gz              solid-1                 ttpoc_web               unixformat
+# linux nmon 和 top 的log 收集方案</p>
+
+<blockquote>
+  <p>利用IBM linux 的nmon 命令和linux 自帶的top 命令收集performance log， 並且利用ftp定時發送log 到 log server 中。</p>
+</blockquote>
+
+<h2 id="linux-log-server-">linux log server 的系統結構</h2>
+
+<p><img src="/assets/img/linux_ftp.png" alt="設定的內容" /></p>
+
+<h2 id="nmontop-log-shell-script">收集nmon&amp;top log 的shell script:</h2>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ cat /opt/nmons/nmons-collect.sh
+#!/bin/bash
+nmonDir="/opt/nmon"
+nmonTool=/opt/nmon/nmon_linux_x86
+#nmonDir=`cat /etc/passwd | grep ^nsadmin | awk -F ':' '{ print $(NF -1) }'`
+#nmonTool=$adpath/nmon/nmon_x86_64_ubuntu1104
+
+echo $nmonDir
+host=`hostname | awk -F"." '{print $1}'`
+today=`date +%y%m%d`
+count=1440
+top -d 60 -n $count -b -i &gt; $nmonDir/$host\_$today.top &amp;
+$nmonTool -f -N -t -s 60 -c $count -m $nmonDir
+
+</code></pre>
+</div>
+
+
+                <p><a href="/blog/ipoc/nmon/devops">[Read More]</a></p>
+                <div class="hline"></div>
+
+                <div class="spacing"></div>
+            
+                <! -- Blog Post -->
+                <a href="/blog/elk/devops/time-to-change-your-apps">
+                    <img class="img-responsive" src="/assets/img/blog/bird.jpg">
+                </a>    
+                <a href="/blog/elk/devops/time-to-change-your-apps"><h3 class="ctitle">改變你的APP 的時間到了</h3></a>
+                <p><csmall>Apr 26, 2016. | By: Polin</csmall></p>
+                <p>devops_Learning         ibm.tar.gz              solid-1                 ttpoc_web               unixformat
+# linux nmon 和 top 的log 收集方案</p>
+
+<blockquote>
+  <p>利用IBM linux 的nmon 命令和linux 自帶的top 命令收集performance log， 並且利用ftp定時發送log 到 log server 中。</p>
+</blockquote>
+
+<h2 id="linux-log-server-">linux log server 的系統結構</h2>
+
+<p><img src="/assets/img/linux_ftp.png" alt="設定的內容" /></p>
+
+<h2 id="nmontop-log-shell-script">收集nmon&amp;top log 的shell script:</h2>
+<div class="highlighter-rouge"><pre class="highlight"><code>$ cat /opt/nmons/nmons-collect.sh
+#!/bin/bash
+nmonDir="/opt/nmon"
+nmonTool=/opt/nmon/nmon_linux_x86
+#nmonDir=`cat /etc/passwd | grep ^nsadmin | awk -F ':' '{ print $(NF -1) }'`
+#nmonTool=$adpath/nmon/nmon_x86_64_ubuntu1104
+
+echo $nmonDir
+host=`hostname | awk -F"." '{print $1}'`
+today=`date +%y%m%d`
+count=1440
+top -d 60 -n $count -b -i &gt; $nmonDir/$host\_$today.top &amp;
+$nmonTool -f -N -t -s 60 -c $count -m $nmonDir
+
+</code></pre>
+</div>
+
+
+                <p><a href="/blog/elk/devops/time-to-change-your-apps">[Read More]</a></p>
+                <div class="hline"></div>
+
+                <div class="spacing"></div>
+            
+                <! -- Blog Post -->
+                <a href="/blog/web-design/development/our-new-logo-is-here">
+                    <img class="img-responsive" src="/assets/img/blog/post02.jpg">
+                </a>    
+                <a href="/blog/web-design/development/our-new-logo-is-here"><h3 class="ctitle">Our new logo is here</h3></a>
+                <p><csmall>Apr 26, 2016. | By: Admin</csmall></p>
+                <p><b>Lorem Ipsum</b> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+
+<p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+
+
+                <p><a href="/blog/web-design/development/our-new-logo-is-here">[Read More]</a></p>
+                <div class="hline"></div>
+
+                <div class="spacing"></div>
+            
+                <! -- Blog Post -->
+                <a href="/blog/tips&tricks/code-snippets/logo-design-contest-starts-now">
+                    <img class="img-responsive" src="/assets/img/blog/post03.jpg">
+                </a>    
+                <a href="/blog/tips&tricks/code-snippets/logo-design-contest-starts-now"><h3 class="ctitle">Logo design contest starts now</h3></a>
+                <p><csmall>Apr 26, 2016. | By: Admin</csmall></p>
+                <p><b>Lorem Ipsum</b> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+
+<p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+
+
+                <p><a href="/blog/tips&tricks/code-snippets/logo-design-contest-starts-now">[Read More]</a></p>
+                <div class="hline"></div>
+
+                <div class="spacing"></div>
+            
+
+        </div><! --/col-lg-8 -->
+
+        <div class="col-lg-3">
+   <!--  <h4>Search</h4>
+    <div class="hline"></div>
+        <p>
+            <br/>
+            <input type="text" class="form-control" placeholder="Search something">
+        </p>
+    <div class="spacing"></div> -->
+    <h4>Subscribe</h4>
+    <div class="hline"></div>
+        <p>
+            <p class="rss-subscribe">Subscribe to this blog <a href="/feed.xml">via RSS</a>.</p>
+        </p>
+    <div class="spacing"></div>
+    <h4>Categories</h4>
+    <div class="hline"></div>
+    
+        <p>
+            <a href="/category/#Tips&Tricks"><i class="fa fa-angle-right"></i> Tips&tricks</a>
+            <span class="badge badge-theme pull-right">1</span>
+        </p>
+    
+        <p>
+            <a href="/category/#Code-Snippets"><i class="fa fa-angle-right"></i> Code-snippets</a>
+            <span class="badge badge-theme pull-right">1</span>
+        </p>
+    
+        <p>
+            <a href="/category/#Web-Design"><i class="fa fa-angle-right"></i> Web-design</a>
+            <span class="badge badge-theme pull-right">1</span>
+        </p>
+    
+        <p>
+            <a href="/category/#Development"><i class="fa fa-angle-right"></i> Development</a>
+            <span class="badge badge-theme pull-right">1</span>
+        </p>
+    
+        <p>
+            <a href="/category/#ELK"><i class="fa fa-angle-right"></i> Elk</a>
+            <span class="badge badge-theme pull-right">16</span>
+        </p>
+    
+        <p>
+            <a href="/category/#DevOps"><i class="fa fa-angle-right"></i> Devops</a>
+            <span class="badge badge-theme pull-right">15</span>
+        </p>
+    
+        <p>
+            <a href="/category/#iPOC"><i class="fa fa-angle-right"></i> Ipoc</a>
+            <span class="badge badge-theme pull-right">1</span>
+        </p>
+    
+        <p>
+            <a href="/category/#NMON"><i class="fa fa-angle-right"></i> Nmon</a>
+            <span class="badge badge-theme pull-right">3</span>
+        </p>
+    
+        <p>
+            <a href="/category/#DEVOPS"><i class="fa fa-angle-right"></i> Devops</a>
+            <span class="badge badge-theme pull-right">1</span>
+        </p>
+    
+
+    <div class="spacing"></div>
+
+    <h4>Recent Posts</h4>
+    <div class="hline"></div>
+        <ul class="popular-posts">
+             
+                <li>
+                    <a href="/blog/elk/nmon/elktop10"><img src="/assets/img/blog/thumbs/thumb02.jpg" alt="Popular Post"></a>
+                    <p><a href="/blog/elk/nmon/elktop10">Top 10 reason for ELK</a></p>
+                <em>Posted on 10 Jul 2016</em>
+            </li>
+             
+                <li>
+                    <a href="/blog/elk/devops/devopsKKK"><img src="/assets/img/blog/thumbs/thumb01.jpg" alt="Popular Post"></a>
+                    <p><a href="/blog/elk/devops/devopsKKK">NMONS iPOC 維運分析評估改</a></p>
+                <em>Posted on 02 Jul 2016</em>
+            </li>
+             
+                <li>
+                    <a href="/blog/elk/devops/elkplusdevops"><img src="/assets/img/blog/thumbs/thumb01.jpg" alt="Popular Post"></a>
+                    <p><a href="/blog/elk/devops/elkplusdevops">DevOps for ELK</a></p>
+                <em>Posted on 01 Jul 2016</em>
+            </li>
+             
+                <li>
+                    <a href="/blog/elk/devops/elkcase1"><img src="/assets/img/blog/thumbs/thumb01.jpg" alt="Popular Post"></a>
+                    <p><a href="/blog/elk/devops/elkcase1">大海撈針：使用ELK 做異常檢測</a></p>
+                <em>Posted on 01 Jul 2016</em>
+            </li>
+             
+        </ul>
+
+    <div class="spacing"></div>
+
+    <h4>Popular Tags</h4>
+    <div class="hline"></div>
+    <p>
+    
+            <a class="btn btn-theme" href="/category/#Tips&Tricks" role="button">Tips&tricks (1)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#Code-Snippets" role="button">Code-snippets (1)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#Web-Design" role="button">Web-design (1)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#Development" role="button">Development (1)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#ELK" role="button">Elk (16)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#DevOps" role="button">Devops (15)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#iPOC" role="button">Ipoc (1)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#NMON" role="button">Nmon (3)</a>	         
+        
+            <a class="btn btn-theme" href="/category/#DEVOPS" role="button">Devops (1)</a>	         
+        
+    </p>
+</div>
+
+
+    </div><! --/row -->
+</div><! --/container -->
+
+
+        <div id="footerwrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <h4>About</h4>
+                <div class="hline-w"></div>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+            </div>
+            <div class="col-lg-4">
+                <h4>Social Links</h4>
+                <div class="hline-w"></div>
+                <p>
+                    
+                        <a href="" class="btn-social btn-outline"><i class="fa fa-dribbble"></i></a>
+                    
+                        <a href="" class="btn-social btn-outline"><i class="fa fa-facebook"></i></a>
+                    
+                        <a href="" class="btn-social btn-outline"><i class="fa fa-twitter"></i></a>
+                    
+                        <a href="" class="btn-social btn-outline"><i class="fa fa-instagram"></i></a>
+                    
+                        <a href="" class="btn-social btn-outline"><i class="fa fa-tumblr"></i></a>
+                    
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <h4>Our Bunker</h4>
+                <div class="hline-w"></div>
+                <p>
+                    
+                        Some Ave, 987, <br>
+                    
+                        23890, New York, <br>
+                    
+                        United States. <br>
+                    
+                </p>
+            </div>
+        </div><! --/row -->
+    </div><! --/container -->
+</div><! --/footerwrap -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
+<script src="/assets/js/retina-1.1.0.js"></script>
+<script src="/assets/js/jquery.hoverdir.js"></script>
+<script src="/assets/js/jquery.hoverex.min.js"></script>
+<script src="/assets/js/jquery.prettyPhoto.js"></script>
+<script src="/assets/js/jquery.isotope.min.js"></script>
+<script src="/assets/js/custom.js"></script>
+
+<script>
+// Portfolio
+(function($) {
+	"use strict";
+	var $container = $('.portfolio'),
+		$items = $container.find('.portfolio-item'),
+		portfolioLayout = 'fitRows';
+		
+		if( $container.hasClass('portfolio-centered') ) {
+			portfolioLayout = 'masonry';
+		}
+				
+		$container.isotope({
+			filter: '*',
+			animationEngine: 'best-available',
+			layoutMode: portfolioLayout,
+			animationOptions: {
+			duration: 750,
+			easing: 'linear',
+			queue: false
+		},
+		masonry: {
+		}
+		}, refreshWaypoints());
+		
+		function refreshWaypoints() {
+			setTimeout(function() {
+			}, 1000);   
+		}
+				
+		$('nav.portfolio-filter ul a').on('click', function() {
+				var selector = $(this).attr('data-filter');
+				$container.isotope({ filter: selector }, refreshWaypoints());
+				$('nav.portfolio-filter ul a').removeClass('active');
+				$(this).addClass('active');
+				return false;
+		});
+		
+		function getColumnNumber() { 
+			var winWidth = $(window).width(), 
+			columnNumber = 1;
+		
+			if (winWidth > 1200) {
+				columnNumber = 5;
+			} else if (winWidth > 950) {
+				columnNumber = 4;
+			} else if (winWidth > 600) {
+				columnNumber = 3;
+			} else if (winWidth > 400) {
+				columnNumber = 2;
+			} else if (winWidth > 250) {
+				columnNumber = 1;
+			}
+				return columnNumber;
+			}       
+			
+			function setColumns() {
+				var winWidth = $(window).width(), 
+				columnNumber = getColumnNumber(), 
+				itemWidth = Math.floor(winWidth / columnNumber);
+				
+				$container.find('.portfolio-item').each(function() { 
+					$(this).css( { 
+					width : itemWidth + 'px' 
+				});
+			});
+		}
+		
+		function setPortfolio() { 
+			setColumns();
+			$container.isotope('reLayout');
+		}
+			
+		$container.imagesLoaded(function () { 
+			setPortfolio();
+		});
+		
+		$(window).on('resize', function () { 
+		setPortfolio();          
+	});
+})(jQuery);
+</script>
+    </body>
+</html>
