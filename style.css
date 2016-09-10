@@ -106,7 +106,7 @@ h1{
 /* Dark theme */
 
 .d-bloc{
-	color:rgba(255,255,255,.7);
+	color:rgba(255,255,255,.3);
 }
 .d-bloc button:hover{
 	color:rgba(255,255,255,.9);
