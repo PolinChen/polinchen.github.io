@@ -238,8 +238,7 @@ hr {
 }
 .percent {
 	display: inline-block;
-	font-size: 30px;
-	font-color: red;
+	font-size: 10px;
 	color: #121d1f;
 	line-height: 152px;
 	z-index: 2;
