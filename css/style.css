@@ -8,6 +8,7 @@ body, html {
 }
 h1 {
 	font-weight: 700;
+	color: red;
 }
 h1 strong {
 	font-weight: 900;
