@@ -229,6 +229,7 @@ hr {
 	height: 152px;
 	margin-bottom: 26px;
 	text-align: center;
+	color: red;
 }
 .chart canvas {
 	position: absolute;
