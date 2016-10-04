@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>TurboTeam</title>
+    <description>Log Analysis Center Introduction</description>
+    <link>http://yourdomain.com/</link>
+    <atom:link href="http://yourdomain.com/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Tue, 04 Oct 2016 16:10:42 +0800</pubDate>
+    <lastBuildDate>Tue, 04 Oct 2016 16:10:42 +0800</lastBuildDate>
+    <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>Elk: Window Event Log 的處理方式</title>
+        <description>&lt;h1 id=&quot;window-event-log-&quot;&gt;Window Event Log 的處理方式&lt;/h1&gt;
+
+&lt;h3 id=&quot;windows-xml-event-log-evtxhttpforensicswikiorgwikiwindowsxmleventlogevtx&quot;&gt;&lt;a href=&quot;http://forensicswiki.org/wiki/Windows_XML_Event_Log_(EVTX)&quot;&gt;Windows XML Event Log (EVTX)&lt;/a&gt;&lt;/h3&gt;
+
+&lt;h4 id=&quot;event-tools&quot;&gt;常用 Event Tools&lt;/h4&gt;
+&lt;hr /&gt;
+&lt;ul&gt;
+  &lt;li&gt;Evtx Parser&lt;/li&gt;
+  &lt;li&gt;libevtx&lt;/li&gt;
+  &lt;li&gt;log2timeline&lt;/li&gt;
+  &lt;li&gt;wevtutil&lt;/li&gt;
+  &lt;li&gt;LogParser&lt;/li&gt;
+  &lt;li&gt;python-evtx&lt;/li&gt;
+  &lt;li&gt;winlast&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;saving-logs-from-the-event-viewerhttpsupportexclaimercomtopics638-saving-logs-from-the-event-viewer&quot;&gt;&lt;a href=&quot;http://support.exclaimer.com/topics/638-saving-logs-from-the-event-viewer/&quot;&gt;Saving logs from the Event Viewer&lt;/a&gt;&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Go to Applications and Services Logs under Event Viewer on the left of the screen.&lt;/li&gt;
+  &lt;li&gt;Right click on the Exclaimer file.&lt;/li&gt;
+  &lt;li&gt;Click Save All Events As…..&lt;/li&gt;
+  &lt;li&gt;The logs will then save as an .evtx file from the Event Viewer.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://support.exclaimer.com/s/attachments/14925/2/1/8562fed8c2d282a62e2779fd5ea66c5c.jpg&quot; alt=&quot;evtx&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;event-log-linux-&quot;&gt;檢查 event log 的格式內容在Linux 中&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;DB_EVENT.evtx: MS Windows Vista Event Log, 1 chunks (no. 0 in use), next record no. 2
+DB_EVENT.txt:  UTF-8 Unicode (with BOM) English text, with very long lines
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;logstash-windows-eventloghttpsgithubcomrandomvariablelogstash-windows-eventlogblobmasterreadmemd&quot;&gt;&lt;a href=&quot;https://github.com/randomvariable/logstash-windows-eventlog/blob/master/README.md&quot;&gt;logstash-windows-eventlog&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;To collect all registered event logs, use the following config:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;input {
+  windowseventlog {}
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;To collect events from just Hyper-V, use a config like :&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;input {
+  windowseventlog {
+  log_files  =&amp;gt; [&#39;Microsoft-Windows-Hyper-V-Hypervisor-Operational&#39;,&#39;Microsoft-Windows-Hyper-V-Config-Admin&#39;]
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Let’s capture some IIS tracing logs (from AppFabric or some such):&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;input {
+windowseventlog {
+  log_files =&amp;gt; [&#39;C:\inetpub\logs\tracing\evt.evtx&#39;]
+  log_type  =&amp;gt; &#39;FilePath&#39;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Capture all logs, but filter for only a certain system event ID using an xPath query:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;input {
+windowseventlog {
+  filter =&amp;gt; &quot;*[System[(EventID=2202)]]&quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;log-&quot;&gt;log 中文格式範本&lt;/h3&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;等級    日期和時間      來源    事件識別碼      工作類別
+資訊    2016/10/4 上午 10:48:09 Desktop Window Manager  9003    無      桌面視窗管理員無法啟動，因為目前沒有使用轉譯緩衝處理的佈景主題
+資訊    2016/10/4 上午 10:48:08 Microsoft-Windows-Winlogon      4101    無      Windows 授權已驗證。
+資訊    2016/10/4 上午 10:37:19 Desktop Window Manager  9009    無      桌面視窗管理員已經結束，錯誤碼是 (0x40010004)
+資訊    2016/10/4 上午 09:40:32 SceCli  1704    無      群組原則物件中的安全性原則已經套用成功。
+資訊    2016/10/4 上午 09:25:14 Desktop Window Manager  9003    無      桌面視窗管理員無法啟動，因為目前沒有使用轉譯緩衝處理的佈景主題
+資訊    2016/10/4 上午 09:25:14 Microsoft-Windows-Winlogon      4101    無      Windows 授權已驗證。
+錯誤    2016/10/4 上午 08:30:06 SQLISPackage100 12291   無      &quot;Package &quot;&quot;Load_TWCI_Prestage&quot;&quot; failed.&quot;
+資訊    2016/10/4 上午 08:30:06 SQLISPackage100 12288   無      &quot;Package &quot;&quot;Load_TWCI_Prestage&quot;&quot; started.&quot;
+資訊    2016/10/4 上午 08:03:30 SceCli  1704    無      群組原則物件中的安全性原則已經套用成功。
+錯誤    2016/10/4 上午 08:00:06 SQLISPackage100 12291   無      &quot;Package &quot;&quot;Load_TWCI_Prestage&quot;&quot; failed.&quot;
+資訊    2016/10/4 上午 08:00:06 SQLISPackage100 12288   無      &quot;Package &quot;&quot;Load_TWCI_Prestage&quot;&quot; started.&quot;
+錯誤    2016/10/4 上午 07:30:05 SQLISPackage100 12291   無      &quot;Package &quot;&quot;Load_TWCI_Prestage&quot;&quot; failed.&quot;
+資訊    2016/10/4 上午 07:30:05 SQLISPackage100 12288   無      &quot;Package &quot;&quot;Load_TWCI_Prestage&quot;&quot; started.&quot;
+錯誤    2016/10/4 上午 07:00:05 SQLISPackage100 12291   無      &quot;Package &quot;&quot;Load_TWCI_Prestage&quot;&quot; failed.&quot;
+資訊    2016/10/4 上午 07:00:05 SQLISPackage100 12288   無      &quot;Package &quot;&quot;Load_TWCI_Prestage&quot;&quot; started.&quot;
+錯誤    2016/10/4 上午 06:30:05 SQLISPackage100 12291   無      &quot;Package &quot;&quot;Load_TWCI_Prestage&quot;&quot; failed.&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Mon, 03 Oct 2016 19:54:46 +0800</pubDate>
+        <link>http://yourdomain.com/elk/windows/Windows-EventLog</link>
+        <guid isPermaLink="true">http://yourdomain.com/elk/windows/Windows-EventLog</guid>
+        
+        
+        <category>ELK</category>
+        
+        <category>Windows</category>
+        
+      </item>
+    
+      <item>
+        <title>Ipoc: iPOC 效能維運分析系統簡介</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;隨著 IT系統越來越複雜，IT維運的複雜度和難度正急劇攀升，IT維運的思路、技術與方法都要有所創新；更由於缺乏對 IT維運及運營的有效管理，很多企業與組織的IT在巨額投資背後卻是長期的低效運營，IT投資的價值難以獲得實現。
+建設並不能代替維運與管理，企業更不能僅僅通過採購與建設就全部獲得IT 所帶來的價值。只有通過長期系統、高效的維運與運營，IT才能實現與業務的同步發展。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;IT維運不僅僅是對現有系統環境的維護，更是實現IT系統高效運營的關鍵，企業與單位需要基於業務需求打造合理的IT維運體系與機制，真正全面掌握自身IT的運營，發揮IT最大潛能。&lt;/p&gt;
+
+&lt;p&gt;IT智能維運服務，以創新的理念強調主動性、防患於未然。通過對系統可用性、可靠性的評估，可以排查出運行的高風險點及弱點，從而設置對應的防範措施及應對手段，還能夠提供主動防禦，在問題出現之前減少甚至消除可能發生的事故。&lt;/p&gt;
+
+&lt;p&gt;在通過IT智能維運服務過程中通過預防維護、提前發現系統中的某個組件的故障有可能引起原來不可預測的整體系統問題，更有效地預測和預防這些問題，對企業IT的高效、健全運行至關重要。&lt;/p&gt;
+
+&lt;h3 id=&quot;section&quot;&gt;落實主動預警的維運服務:&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;在IT維運領域中，“主動”並不是一個新鮮的概念。幾乎所有的宣傳、產品、使用者、理念都在宣揚“主動”，如何從被動到主動管理，來提高IT服務水準、提高系統可用性、降低維運成本。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;隨著資料量和應用複雜度持續增加，當核心應用出現如變慢、報錯、停止響應等異常時，雖然已經能夠獲取網路設備、伺服器，甚至資料庫的警告資訊，但成千條警告資訊堆積在一起根本沒法判斷問題的根源在哪裡?&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;由於IT維運部門缺乏有效的管理手段、經驗和時間，對於問題的識別和解決就會變得困難和緩慢，無法快速有效定位問題的根源，通常只能選擇如重啟系統等無奈手段，讓系統暫時性的恢復運行。那麼企業到底怎樣才能實現真正的“主動”呢？&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/IH3k2Zt.png&quot; alt=&quot;Imgur5&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;big-data-&quot;&gt;建立Big-Data 技術核心的營運機制:&lt;/h3&gt;
+
+&lt;p&gt;Big-Data 的技術核心，就在於對資料的收集、處理和預測分析。因為資料越來越多，海量的資料庫每天都在積累，如果不能從中獲得分析和有價值的結論，這些資料就會變得毫無價值。&lt;/p&gt;
+
+&lt;p&gt;IT 智能維運服務，採用Big-Data資料採擷技術，它通過收集核心應用運行過程中，主機伺服器、存儲系統、資料庫、網路、應用軟體產生的系統日誌和效能日誌的海量資料。由於應用系統全年無休的運行，便產生數量巨大、結構複雜、類型眾多的資料構成Big-Data集合。
+再通過大資料分析技術，將資料的產生、存儲、挖掘和展現的全生命週期進行綜合分析處理，通過資料的集成共用，交叉複用形成的智力資源和知識服務能力。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/34HfW6A.png&quot; alt=&quot;Imgur5a&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;saas&quot;&gt;視覺化的SaaS雲端分析平臺:&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;經由Big-Data資料採擷技術，經由SaaS的雲端分析平臺，對核心應用的日誌建模與多維關聯分析，交叉比對的檢核，以提供維運有效的提前預防處理服務。
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;預警分析：對業務、網路、硬體系統的效能管理中積累的資料，都將用於統計分析，主動預警當前沒有發生未來可能發生的系統效能問題，並通過積累資料的使用，分析出問題可能的所在，提前制定應急措施規避風險。根據主動預警期發現的問題而制定的方案，可作為應急預案歸檔，當發生類似效能事件時可啟動應急預案進行臨時性處理。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;橫向縱向結合效能分析：橫向分析各業務系統之間的相互關聯，明確各系統之間的系統連帶影響性，判明單個系統發生效能問題時對其他相關系統的效能影響程度；縱向分析主要在整個IT系統層面發生效能問題時，自上而下逐層分析IT系統，找出影響業務系統效能的根本癥結。
+脫離每天被繁冗的警告和報表所包圍的現狀，利用“iPOC-SaaS雲端分析平臺”高效而清晰地描述業務系統的運行狀況，立即把所有的警告資訊化繁為簡，一目了然。IT 部門必須能夠提供追蹤問題改善狀況的評估方式，以便達成持續的改進成果，這才是“主動”的內涵。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/33fMfhX.png&quot; alt=&quot;Imgur5B&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;ipoc&quot;&gt;iPOC智能維運服務主要的優勢：&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;採用agentless 技術，無需在伺服器上安裝任何軟體，不影響應用系統的穩定性。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;綜合診斷包含核心應用中的網路、伺服器、存儲系統、資料庫和應用軟體，精確定位效能問題的根源。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;主動檢測應用系統的效能問題，並對效能問題進行量化和分級，落實主動預防的維運管理，降低IT運行風險。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;結合專業的顧問服務和雲端的分析平臺，提升運行速度，降低維運成本。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;服務目標&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;利用IT維運的BigData，創建預警通報機制，通過統一收集IT系統的主機、存儲、網路、OS、DB、AP等相關LOG，利用BIG DATA 的挖掘分析技術，建立關鍵指標的趨勢統計和關聯分析，創建異常前兆的識別模型。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;提供標準維運服務，包含駐點服務、設備維運、事故維運、和應急方案等標準服務，以保證總處電腦機房及資訊設備之維護、保養及管理機制，維持各資訊系統之正常運作。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;利用智能維運的服務機制，提升電腦機房設施管理、硬體維護、系統管理、網路管理、資料庫管理和應用軟體管理資訊服務等水準，提升對外服務滿意度。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;非硬體故障產生的服務中斷包含: 使用者等待、系統報錯、負載過大、運行緩慢、應用當機、系統重啟、使用者無法登陸等現象。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;大多數企業都是在發生服務中斷後，已造成影響時才發現並開始處理，很難落實有效的預警通報機制。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/HzUHCNx.png&quot; alt=&quot;Imgur6A&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;it&quot;&gt;IT智能維運服務實施策略:&lt;/h3&gt;
+
+&lt;p&gt;由於系統的效能問題，涉及IT系統各個層面，實施複雜，即要考慮對虛擬系統、伺服器、資料庫系統軟體、應用等各個方面進行兼顧與部署，又需要考慮減少對現有生產系統的影響，因此需要整體分析，找出重點，分步執行。&lt;/p&gt;
+
+&lt;p&gt;首先從整體系統著眼，橫向分析所有業務系統之間的關聯，找出各系統之間的關係與介面，形成業務系統整體架構圖，而後自上而下的逐層分析出底層各IT設施的使用、歸屬情況，制定實施物件輕重表，對重點對象先期處理。
+根據分析結果制定詳細執行計畫，在通過對關鍵、重點系統的效能分析，首先解決目前影響最大的效能關鍵項，完成分析與改進後，總結規範效能基本管理工作制度和流程。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;有效的預警機制，來自異常發生前的前兆識別&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/IQZDeh3.png&quot; alt=&quot;Imgur7A&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;it-1&quot;&gt;IT智能維運服務實施方式:&lt;/h3&gt;
+
+&lt;p&gt;建制Big-Data 核心技術的日誌收集機制：建制提供Big-Data log server一台，自動收集60-70台虛擬伺服器及主機的效能日誌，全年無休的收集系統效能日誌。&lt;/p&gt;
+
+&lt;p&gt;建制iPOC-SaaS 雲端分析平臺：將收集到的Big-Data的日誌，進行存儲、整理、歸納、統計、進行各系統之間的橫向比較和每個系統之間設備資源關聯分析，並且以Web 的圖形介面顯示，提供給不同的維運團隊使用。&lt;/p&gt;
+
+&lt;p&gt;提供專業的顧問服務：進行系統的效能解讀並且提供綜合分析報告，以便事先發現問題，事先防範，避免效能問題反複發生。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/QT4Yh6c.png&quot; alt=&quot;Imgur8A&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;section-2&quot;&gt;提前排查異常的問題:&lt;/h3&gt;
+
+&lt;p&gt;通過集中排查異常、逐一提前排除、縮短處理週期、落實主動維運、達成事先防患、以控制服務品質和維運成本。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/fM0xOjy.png&quot; alt=&quot;Imgur9A&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;section-3&quot;&gt;專家的整理與分析:&lt;/h3&gt;
+
+&lt;p&gt;不同領域的專家協同進行問題的匯總和歸類，提供提前解決的最佳依據。持續的效能資料獲取，掌控系統維運的脈動，提前發現隱患&lt;/p&gt;
+
+</description>
+        <pubDate>Sat, 03 Sep 2016 00:54:46 +0800</pubDate>
+        <link>http://yourdomain.com/ipoc/iPOC-brief</link>
+        <guid isPermaLink="true">http://yourdomain.com/ipoc/iPOC-brief</guid>
+        
+        
+        <category>iPOC</category>
+        
+      </item>
+    
+      <item>
+        <title>Elk: IT 維運面臨的問題和挑戰</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;隨著技術及業務的快速發展，當前企業和單位不得不面對日益復雜的IT基礎架構、眾多IT廠商不同的服務標準與服務水準、不同時期獨立搭建的各系統間的互聯性管理、不同品牌的產品、多地域及多人員的複雜管理，IT系統穩定性與速度的平衡管理等問題，這為實現IT系統穩定、高效的運行帶來了巨大挑戰。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;由於缺乏主動性、預防性的管理手段， IT部門往往是在影響業務的事故發生後，才會被動的發現問題並進行處理異常&lt;/li&gt;
+  &lt;li&gt;當應用系統產生報錯、變慢、當機等異常時，由於IT環境複雜，對於問題的識別就會變得困難和緩慢。&lt;/li&gt;
+  &lt;li&gt;無法快速有效定位問題的真正根源，通常只能選擇如重啟系統等無奈手段，讓系統暫時性的恢復運行。&lt;/li&gt;
+  &lt;li&gt;隨著組織營運與服務規模的成長，企業對IT系統運作的穩定性和品質要求也跟隨著不斷提升,增加管理困難度。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/GOWrXUt.png&quot; alt=&quot;Imgur0&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;傳統IT維運管理是“救火式”的管理方式，通常是事件發生後，業務因此受到影響時才著手解決。由於被動的處理問題，不僅因為處理時間太久，影響服務品質外，同時也使IT維運人員終日被簡單、重複性的問題所牽絆，無法專注於核心業務的開展。&lt;/p&gt;
+
+&lt;h3 id=&quot;section&quot;&gt;被動式的事故維運現況說明：&lt;/h3&gt;
+
+&lt;p&gt;現有的維運管理中，由於缺乏主動性、預防性的管理手段， IT部門往往是在影響業務的事故發生後或報警後，才會被動的發現問題並進行處理異常。&lt;/p&gt;
+
+&lt;p&gt;現有的IT維運服務商超過90%都是以‘故障維修’服務為主，客服單位接到使用者的抱怨和投訴後，再通知維運部門開始處理。維運部門如果無法解決，才再通知維運服務商，維運服務商再直接去客戶那裡解決問題。這種被動的維運服務方式，不僅問題處理效率很低，影響服務品質外，各方的服務成本也隨著會越來越高。&lt;/p&gt;
+
+&lt;p&gt;可是當IT維運服務商到達現場外，發現因為設備產品損壞造成的故障的因素只占到20%, 其他莫名異常的原因占比卻高達80%。&lt;/p&gt;
+
+&lt;p&gt;為了保證核心系統的高效穩定的運行，IT部門開始實施一連串的調優、升級、擴容和更換更高規格的軟硬體設備，所以IT預算的75%通常被重複投資在現有IT設備的運行上，而不是致力於提高IT生產力的IT建設。&lt;/p&gt;
+
+&lt;p&gt;從IT部門用於解決問題的總耗時裡，有超過50%的時間是用於發現問題、診斷造成異常的真正原因，而不是解決問題。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/9un464L.png&quot; alt=&quot;Imgur1&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;section-1&quot;&gt;真正的問題到底在哪裡?&lt;/h3&gt;
+&lt;p&gt;隨著資料量和應用複雜度持續增加，當核心應用出現如變慢、報錯、停止響應等異常時，由於IT維運部門缺乏有效的管理手段、經驗和時間，對於問題的識別和解決就會變得困難和緩慢，無法快速有效定位問題的根源，通常只能選擇如重啟系統等無奈手段，讓系統暫時性的恢復運行。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/dCNtD3V.png&quot; alt=&quot;Imgur2&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;it-&quot;&gt;IT 維運部門的挑戰:&lt;/h2&gt;
+&lt;p&gt;經過幾年建設，IT系統基本進入維運期，維運工作面臨巨大挑戰，維運工作壓力不斷增大。儘管通過規範的維運實施和加強系統日常維運工作，但由於應用系統多且各系統之間關聯性強，一旦應用系統出現問題時，往往很難快速有效定位問題根源。&lt;/p&gt;
+
+&lt;p&gt;應用系統問題診斷複雜，技術手段單一：雖然維運部門已經建立了系統效能問題處理流程，通過7*24小時監控、及時重啟應用及應用日誌分析等手段進行處理。由於網路、主機、應用伺服器、資料庫等基礎環境複雜，加之各系統之間有較強的關聯性，很難快速有效定位問題根源。為處理效能問題需同時調動多個廠商共同分析，問題處理週期仍然過長，使用常規的日誌檢查，CPU、記憶體使用檢查等手段無法發現問題的癥結，往往只能選擇重啟系統等無奈手段使系統暫時性的恢復運行。&lt;/p&gt;
+
+&lt;p&gt;應用系統問題的解決多為事後處理，難於主動預防。除了無法確認現有問題是否得到解決外，更難於事前主動預防。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/TaHWFho.png&quot; alt=&quot;Imgur3&quot; /&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 02 Sep 2016 00:54:46 +0800</pubDate>
+        <link>http://yourdomain.com/elk/ipoc/MA-status</link>
+        <guid isPermaLink="true">http://yourdomain.com/elk/ipoc/MA-status</guid>
+        
+        
+        <category>ELK</category>
+        
+        <category>iPOC</category>
+        
+      </item>
+    
+      <item>
+        <title>Elk: Microsoft IIS log 設定方式</title>
+        <description>&lt;h1 id=&quot;iis-60-&quot;&gt;iis 6.0 上的參數設定&lt;/h1&gt;
+&lt;p&gt;用戶提供的iislog 中的參數中， 沒有time taken 的內容&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Software: Microsoft Internet Information Services 6.0
+Version: 1.0
+Date: 2016-06-28 06:05:45
+Fields: date time s-sitename s-ip cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) sc-status sc-substatus sc-win32-status
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;回答內容&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;目前的iis log 中 有個Time Taken的參數， 是看響應時間， default 是N， 所以沒有收集到， 是否可以更改為Y， 以下是microsoft 的iis log 的說明文件
+Time Taken time-taken The length of time that the action took, in milliseconds.  N&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;目前的iis log 中 有個Time Taken的參數， 是看響應時間， default 是N， 所以沒有收集到， 是否可以更改為Y， 以下是microsoft 的iis log 的說明文件&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;microsoft-&quot;&gt;microsoft 上的設定畫面&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/bGySN8e.png&quot; alt=&quot;設定的內容&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;iislog-&quot;&gt;iislog 時間差的確認&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/iislog-8hr.png&quot; alt=&quot;時間差的畫面&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;microsoft 上的說明內容&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.microsoft.com/technet/prodtechnol/WindowsServer2003/Library/IIS/676400bc-8969-4aa7-851a-9319490a9bbb.mspx?mfr=true&quot;&gt;microsoft iis 6.0 說明文件&lt;/a&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 26 Aug 2016 00:54:46 +0800</pubDate>
+        <link>http://yourdomain.com/elk/iis/time-to-change-your-apps</link>
+        <guid isPermaLink="true">http://yourdomain.com/elk/iis/time-to-change-your-apps</guid>
+        
+        
+        <category>ELK</category>
+        
+        <category>IIS</category>
+        
+      </item>
+    
+      <item>
+        <title>Blog: Logo design contest starts now</title>
+        <description>&lt;p&gt;&lt;b&gt;Lorem Ipsum&lt;/b&gt; is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.&lt;/p&gt;
+
+&lt;p&gt;It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. &lt;!--more--&gt;
+It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.&lt;/p&gt;
+
+&lt;p&gt;Contrary to popular belief, &lt;b&gt;Lorem Ipsum is not simply random text&lt;/b&gt;. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Hampden-Sydney College&lt;/a&gt; in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.&amp;lt;&lt;/p&gt;
+
+&lt;p&gt;Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of “de Finibus Bonorum et Malorum” (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, “Lorem ipsum dolor sit amet..”, comes from a line in section 1.10.32.&lt;/p&gt;
+
+&lt;p&gt;####Why do we use it?
+It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ‘Content here, content here’, making it look like readable English.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for ‘lorem ipsum’ will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don’t look even slightly believable.&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 26 Jun 2016 00:54:46 +0800</pubDate>
+        <link>http://yourdomain.com/blog/tips&tricks/code-snippets/logo-design-contest-starts-now</link>
+        <guid isPermaLink="true">http://yourdomain.com/blog/tips&tricks/code-snippets/logo-design-contest-starts-now</guid>
+        
+        
+        <category>blog</category>
+        
+        <category>Tips&amp;Tricks</category>
+        
+        <category>Code-Snippets</category>
+        
+      </item>
+    
+      <item>
+        <title>Blog: Our new logo is here</title>
+        <description>&lt;p&gt;&lt;b&gt;Lorem Ipsum&lt;/b&gt; is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.&lt;/p&gt;
+
+&lt;p&gt;It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. &lt;!--more--&gt;
+It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.&lt;/p&gt;
+
+&lt;p&gt;Contrary to popular belief, &lt;b&gt;Lorem Ipsum is not simply random text&lt;/b&gt;. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Hampden-Sydney College&lt;/a&gt; in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source.&amp;lt;&lt;/p&gt;
+
+&lt;p&gt;Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of “de Finibus Bonorum et Malorum” (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, “Lorem ipsum dolor sit amet..”, comes from a line in section 1.10.32.&lt;/p&gt;
+
+&lt;p&gt;####Why do we use it?
+It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ‘Content here, content here’, making it look like readable English.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for ‘lorem ipsum’ will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don’t look even slightly believable.&lt;/p&gt;
+
+</description>
+        <pubDate>Sat, 26 Jul 2014 00:54:46 +0800</pubDate>
+        <link>http://yourdomain.com/blog/web-design/development/our-new-logo-is-here</link>
+        <guid isPermaLink="true">http://yourdomain.com/blog/web-design/development/our-new-logo-is-here</guid>
+        
+        
+        <category>blog</category>
+        
+        <category>Web-Design</category>
+        
+        <category>Development</category>
+        
+      </item>
+    
+      <item>
+        <title>Question: Why did the Chicken cross the road?</title>
+        <description>&lt;p&gt;To get to the other side.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 26 Apr 2014 00:54:46 +0800</pubDate>
+        <link>http://yourdomain.com/question/your-project-name</link>
+        <guid isPermaLink="true">http://yourdomain.com/question/your-project-name</guid>
+        
+        
+        <category>question</category>
+        
+      </item>
+    
+      <item>
+        <title>Project: YOUR PROJECT NAME</title>
+        <description>&lt;p&gt;####YOUR PROJECT NAME
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.&lt;/p&gt;
+
+&lt;p&gt;####Our Proposal
+It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 26 Apr 2014 00:54:46 +0800</pubDate>
+        <link>http://yourdomain.com/project/your-project-name</link>
+        <guid isPermaLink="true">http://yourdomain.com/project/your-project-name</guid>
+        
+        
+        <category>project</category>
+        
+      </item>
+    
+      <item>
+        <title>Project: YOUR PROJECT NAME</title>
+        <description>&lt;p&gt;####YOUR PROJECT NAME
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.&lt;/p&gt;
+
+&lt;p&gt;####Our Proposal
+It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 26 Apr 2014 00:54:46 +0800</pubDate>
+        <link>http://yourdomain.com/project/your-project-name</link>
+        <guid isPermaLink="true">http://yourdomain.com/project/your-project-name</guid>
+        
+        
+        <category>project</category>
+        
+      </item>
+    
+      <item>
+        <title>Project: YOUR PROJECT NAME</title>
+        <description>&lt;p&gt;####YOUR PROJECT NAME
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.&lt;/p&gt;
+
+&lt;p&gt;####Our Proposal
+It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 26 Apr 2014 00:54:46 +0800</pubDate>
+        <link>http://yourdomain.com/project/your-project-name</link>
+        <guid isPermaLink="true">http://yourdomain.com/project/your-project-name</guid>
+        
+        
+        <category>project</category>
+        
+      </item>
+    
+  </channel>
+</rss>
