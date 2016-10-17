@@ -48,30 +48,154 @@
     <div class="navbar-collapse collapse navbar-right">
       <ul class="nav navbar-nav">
         <li class="active"><a href="/">HOME</a></li>
-        <li ><a href="/portfolio/">Products</a></li>
-        <li ><a href="/blog/">BLOG</a></li>
-        <li ><a href="/about/">ABOUT</a></li>
-        <li ><a href="/contact/">CONTACT</a></li>
+        <li ><a href="/">PRODUCTS</a></li>
+        <li ><a href="/">BLOG</a></li>
+        <li ><a href="/">ABOUT</a></li>
+        <li ><a href="/">LOGIN</a></li>
       </ul>
     </div><!--/.nav-collapse -->
   </div>
 </div>
 
 
-            <div id="headerwrap">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
-                <h1>BiMAP 維運大數據分析平台</h2>
-                <h1>Logging as a Service</h1>
-            </div>
-            <div class="col-lg-8 col-lg-offset-2 himg">
-	<img src="http://i.imgur.com/w09rKV4.png" class="img-responsive">
+            <style>
+.main-text
+{
+    position: absolute;
+    top: 30px;
+    width: 96.66666666666666%;
+    color: #FFF;
+}
+/* Carousel Header Styles */
+.header-text {
+    position: absolute;
+    top: 60%;
+    left: 1.8%;
+    right: auto;
+    width: 96.66666666666666%;
+    color: #fff;
+}
 
-            </div>
-        </div><!-- /row -->
-    </div> <!-- /container -->
-</div><!-- /headerwrap -->
+.header-text h2 {
+	font-size: 48px; line-height: 48px;
+}
+
+.btn-min-block
+{
+    min-width: 170px;
+    line-height: 26px;
+}
+.btn-clear
+{
+    color: #FFF;
+    background-color: transparent;
+    border-color: #FFF;
+    margin-right: 15px;
+}
+.btn-clear:hover
+{
+    color: #000;
+    background-color: #FFF;
+}
+.fade-carousel .slides .slide-1 {
+  background-image: url("https://unsplash.imgix.net/photo-1416339442236-8ceb164046f8?q=75&fm=jpg&s=8eb83df8a744544977722717b1ea4d09");
+}
+
+.slide1 {
+    background: linear-gradient(rgba(0,0,0,.8), rgba(0,0,0,.4)), url("http://capechamber.co.za/wp-content/uploads/cache/images/2016/10/Employee-Performance-Management/Employee-Performance-Management-2335119785.jpg");
+}
+.slideS {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    color: #fff;
+    height: 450px;
+    padding-top: 50px;
+}
+.slide2 {
+    background: linear-gradient(rgba(0,0,0,.8), rgba(0,0,0,.4)), url("https://www.elastic.co/assets/blt61ca09a5fec7c895/1.png");
+}
+.slide3 {
+    background: linear-gradient(rgba(0,0,0,.8), rgba(0,0,0,.4)), url(" https://www.ibm.com/developerworks/community/blogs/c914709e-8097-4537-92ef-8982fc416138/resource/BLOGS_UPLOADED_IMAGES/lifecycle1.jpg"); 
+}
+</style>
+
+<div id="headerwrap">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="item active">
+		    <div class="slide1 slideS"> </div>
+                    <div class="header-text">
+                        <div class="col-md-12 text-center">
+                            <h1>
+                            iPOC 效能維運分析
+                            </h1>
+                            <h3>
+                            	Performance Operation Center
+                            </h3>
+                            <br>
+                        </div><!-- /col-md-12 -->
+                    </div><!-- /header-text -->
+                    </div><!-- /item -->
+                    <div class="item">
+		    	<div class="slide2 slideS"> </div>
+                        <div class="header-text">
+                       	<div class="col-md-12 text-center">
+                            <h1>
+                                ELK 日誌檢索分析</h1>
+                            <h3>
+                                Logstash+Elasticsearch+Kibana</h3>
+                        </div><!-- /col-md-12 -->
+                    </div><!-- /header-text -->
+                    </div><!-- /item -->
+                    <div class="item">
+		    	<div class="slide3 slideS"> </div>
+                    	<div class="header-text ">
+                        <div class="col-md-12 text-center">
+                            <h1>
+                                DevOps 自動化維運</h1>
+                            <h3>
+                                Development+Operations+Automation </h3>
+                        </div><!-- /col-md-12 -->
+                    </div><!-- /header-text -->
+                    </div><!-- /item -->
+                </div> <!-- carousel-inner -->
+
+            </div> <!-- carousel-slide -->
+            <div class="main-text hidden-xs">
+                <div class="col-md-12 text-center">
+                    <h1>
+                        BiMAP log 日誌分析系統</h1>
+                    <h2>
+                        Logging As A Service 
+                    </h2>
+		    <p> </p> <br>
+
+<form class="form-inline">
+  <div class="form-group">
+    <input type="text" class="form-control btn-clear btn-min-block" id="exampleInputName2" placeholder="Username">
+  </div>
+  <div class="form-group">
+    <input type="email" class="form-control btn-clear btn-min-block" id="exampleInputEmail2" placeholder="Password">
+  </div>
+  <button type="submit" class="btn btn-sucsess">Login</button>
+</form>
+
+                </div><!-- /col-md-12  -->
+            </div> <!-- main-text -->
+
+        </div>
+    </div>
+</div>
+</div>
 
 
   <div id="service">
@@ -103,25 +227,96 @@
 </div><! --/service -->
 
 
-<div id="twrap">
-    <div id="twrapback"></div>
-    <div class="container centered">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
-            <i class="fa fa-cloud"></i>
-<h1>
-BiMAP 運維大數據分析
-</h1> 
-<hr>
-<p>
-是iT系統運維的大數據解決方案，將IT系統運行過程中所產生巨量的log，利用BigData 的技術 對運維過程中產生的大量log的收集、處理和預測分析，幫助你快速解決故障，並排查出運行過程中的高風險點和弱點，為運維決策的預測依據，在異常現象出現之前，採取有效的防範措施和手段，以減少或消除可能發生的事故， 進而發揮大數據對運維決策分析和防患於未然的重要作用！
-</p>
-            <h4><br/>利用大數據分析技術 - 提升iT 維運品質</h4>
-            <p>數字化維運、可視化維運、自動化維運</p>
-            </div>
-        </div><! --/row -->
-    </div><! --/container -->
-</div><! --/twrap -->
+<style>
+.bg-eventlog {
+    background: linear-gradient(rgba(0,0,0,.2), rgba(0,0,0,.7)),url("http://i.imgur.com/au3oS7O.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    color: #fff;
+    height: auto;
+    padding-top: 20px;
+    padding-top: 20px;
+}
+.color-eventlog h4 {
+    color: #F2BF42;
+    font-size: 18px;
+    line-height: 27px;　　　          　
+}
+.color-eventlog h3 {
+    color: #F2BF42;
+}
+</style>
+
+
+<div class="container-fluid bg-eventlog">
+<div class="container hblock">
+    <div class="row color-eventlog">
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+ <br><br> <br><br> <br><br>
+    <h3 >應用Log 集中分析技術，提昇iT 維運品質</h3>
+<h4>
+通過BiMAP 對主機伺服器、存儲系統、資料庫、網路、應用軟體等日誌的集中收集、處理和預測分析；幫助你快速解決故障，並排查出運行過程中的高風險點和弱點，為運維決策的預測依據，在異常現象出現之前，採取有效的防範措施和手段，以減少或消除可能發生的事故， 進而發揮大數據對運維決策分析和防患於未然的重要作用！
+</h4>
+            <p><br/><a href="/contact/" class="btn btn-theme">ReadMore</a></p>
+        </div>
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <img src="http://i.imgur.com/MIREEOe.png" class="img-responsive">
+        </div>
+    </div><! --/row -->
+</div><! --/container -->
+</div><! --/container -->
+
+<style>
+.destacados{
+    padding: 20px 0;
+	text-align: center;
+}
+.destacados > div > div{
+	padding: 10px;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	transition: 0.2s;
+}
+.destacados > div:hover > div{
+	border: 1px solid rgb(200, 200, 200);
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 5px 2px;
+	background: rgba(200, 200, 200, 0.1);
+	transition: 0.5s;
+}
+</style>
+<div class="container">
+	<div class="row destacados">
+		<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+    		<div>
+				<img src="http://i.imgur.com/i3UGNWV.png" alt="Texto Alternativo" class="img-circle img-thumbnail">
+				<h2>軟體品質驗證</h2>
+			</div>
+		</div>
+
+		<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+			<div>
+				<img src="http://i.imgur.com/XOAxvgg.png" alt="Texto Alternativo" class="img-circle img-thumbnail">
+				<h2>系統維運分析</h2>
+			</div>
+		</div>
+
+		<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+			<div>
+				<img src="http://i.imgur.com/YdCJLVt.png" alt="Texto Alternativo" class="img-circle img-thumbnail">
+				<h2>資安Log分析</h2>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+			<div>
+				<img src="http://i.imgur.com/x6wPbKz.png" alt="Texto Alternativo" class="img-circle img-thumbnail">
+				<h2>商業決策分析</h2>
+			</div>
+		</div>
+
+	</div>
+</div>
+
 
 <div class="container-fluid color_green ">
 <div class="container hblock">
@@ -141,15 +336,27 @@ BiMAP 運維大數據分析
 </div><! --/container -->
 </div><! --/container -->
 
-<div class="container-fluid color_grey">
+<style>
+.bg-ipoc {
+    background: linear-gradient(rgba(242,191,66,1), rgba(242,191,66,.7));
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    color: #fff;
+    height: auto;
+    padding-top: 20px;
+    padding-top: 20px;
+}
+</style>
+<div class="container-fluid color_yellow bg-ipoc">
 <div class="container hblock">
             <h3>落實效能維運，提升用戶滿意度</h3>
         <hr>
     <div class="row">
-        <div class="col-lg-6">
-        <img src="http://i.imgur.com/PWRMgAo.jpg" class="img-responsive">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <img src="http://i.imgur.com/OewPWJz.jpg" class="img-responsive">
         </div>
-        <div class="col-lg-6">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 <h4>提供升級改造的量化依據，保障投資效益</h4>
 <p>隨著核心應用系統複雜度和的資料量日益增長，IT系統也會隨需而變。如何利用大數據維運分析平台，如何量化評估應用系統的負載需求和資源設備的最大業務支撐力，來保障核心系統未來3-5年的高效穩定運行。避免升級方案實施後，才發現改善效果不如預期的現象。
 </p>
@@ -164,6 +371,96 @@ BiMAP 運維大數據分析
             <p><br/><a href="/contact/" class="btn btn-theme">ReadMore</a></p>
         </div>
     </div><! --/row -->
+</div><! --/container -->
+</div><! --/container -->
+
+<style>
+.glyphicon-lg{font-size:3em}
+.blockquote-box{border-right:5px solid #00b3fe;margin-bottom:25px}
+.blockquote-box .square{width:100px;min-height:50px;margin-right:22px;text-align:center!important;background-color:#00b3fe;padding:20px 0}
+.blockquote-box.blockquote-primary{border-color:#357EBD}
+.blockquote-box.blockquote-primary .square{background-color:#428BCA;color:#FFF}
+.blockquote-box.blockquote-success{border-color:#4CAE4C}
+.blockquote-box.blockquote-success .square{background-color:#5CB85C;color:#FFF}
+.blockquote-box.blockquote-info{border-color:#46B8DA}
+.blockquote-box.blockquote-info .square{background-color:#5BC0DE;color:#FFF}
+.blockquote-box.blockquote-warning{border-color:#EEA236}
+.blockquote-box.blockquote-warning .square{background-color:#F0AD4E;color:#FFF}
+.blockquote-box.blockquote-danger{border-color:#D43F3A}
+.blockquote-box.blockquote-danger .square{background-color:#D9534F;color:#FFF}
+
+</style>
+
+<div class="container-fluid color_grey">
+<div class="container hblock">
+            <h3> iPOC 效能維運應用場景</h3>
+        <hr>
+
+        <div class="col-md-6">
+            <div class="blockquote-box clearfix">
+                <div class="square pull-left">
+                <i class="fa fa-hourglass-end fa-4x"></i>
+                </div>
+                <h4>
+                    高峰期運行緩慢</h4>
+                <p>
+                    準確定位造成系統緩慢的根源，提昇效能問題的處理效率，並提高應用高峰期設備資源的最大利用率。
+                </p>
+            </div>
+            <div class="blockquote-box blockquote-primary clearfix">
+                <div class="square pull-left">
+                        <i class="fa fa-unlink fa-4x"></i>
+                </div>
+                <h4>
+                   異常服務中斷</h4>
+                <p>
+                    提前挖掘系統隱患並持續追蹤，落實主動維運，提前排除可能造成服務中斷的異常，降低被動救火的次數。
+                </p>
+            </div>
+            <div class="blockquote-box blockquote-danger clearfix">
+                <div class="square pull-left">
+                        <i class="fa fa-times fa-4x"></i>
+                </div>
+                <h4>
+                    壓力測試效能評估</h4>
+                <p>
+                    評估測試環境下的各種壓測場景的效能瓶頸分析，並預測生產環境的資源最大的應用支撐力。
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="blockquote-box blockquote-info clearfix">
+                <div class="square pull-left">
+                        <i class="fa fa-bug fa-4x"></i>
+                </div>
+                <h4>
+                    軟體品質驗收</h4>
+                <p>
+                    提供系統上線前軟體品質的驗收方案，提昇應用系統的穩定性，降低系統上線後才發現產生報錯和緩慢的風險。
+                </p>
+            </div>
+            <div class="blockquote-box blockquote-warning clearfix">
+                <div class="square pull-left">
+                        <i class="fa fa-users fa-4x"></i>
+                </div>
+                <h4>
+                    最大支撐力預測</h4>
+                <p>
+                    通過歷史日誌的統計分析，建立關鍵指標的趨勢統計預測，避免因業務和資料增長後，產生的系統當機風險。
+                </p>
+            </div>
+            <div class="blockquote-box blockquote-success clearfix">
+                <div class="square pull-left">
+                        <i class="fa fa-usd fa-4x"></i>
+                </div>
+                <h4>
+                    升級改造採購依據</h4>
+                <p>
+                    量化系統實際的應用需求，提供軟、硬體的採購依據，提供iT 投資效益，避免設備升級後改善不如預期的風險。
+                </p>
+            </div>
+	</div>
 </div><! --/container -->
 </div><! --/container -->
 
@@ -231,9 +528,7 @@ DevOps 中的自動化部署，即是利用工具做自動化部署，減少手�
                     
                         新北市板橋區漢生東路193巷17弄21號5樓 <br>
                     
-                        郵遞區號:220, 台灣, <br>
-                    
-                        中華民國 <br>
+                        郵遞區號:22066 <br>
                     
                 </p>
             </div>

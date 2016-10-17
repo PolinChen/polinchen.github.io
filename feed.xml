@@ -5,8 +5,8 @@
     <description>Log Analysis Center Introduction</description>
     <link>http://yourdomain.com/</link>
     <atom:link href="http://yourdomain.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 05 Oct 2016 15:58:55 +0800</pubDate>
-    <lastBuildDate>Wed, 05 Oct 2016 15:58:55 +0800</lastBuildDate>
+    <pubDate>Mon, 17 Oct 2016 10:04:50 +0800</pubDate>
+    <lastBuildDate>Mon, 17 Oct 2016 10:04:50 +0800</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -439,16 +439,53 @@ It is a long established fact that a reader will be distracted by the readable c
       </item>
     
       <item>
-        <title>Project: YOUR PROJECT NAME</title>
-        <description>&lt;p&gt;####YOUR PROJECT NAME
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.&lt;/p&gt;
+        <title>Project: ELK 產品簡介</title>
+        <description>&lt;h3 id=&quot;section&quot;&gt;系統特點說明&lt;/h3&gt;
 
-&lt;p&gt;####Our Proposal
-It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Log集中管理&lt;/strong&gt;:日誌分析是排除系統故障最常用的手段。通過BiMAP 維運分析系統收集核心應用運行過程中所產生的日誌，包含主機伺服器、存儲系統、資料庫、網路、應用軟體等日誌。通過這些數量巨大、結構複雜、類型眾多Log的集中管理，除了協助系統維運以及除錯外，更可以提供 IT 人員未來執行系統優化和擴容計畫時的確切可行方向。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Log檢索分析&lt;/strong&gt;: 利用BigData 分析技術，將集中的所有資料屬性、內容迥異的結構化和非結構化log，進行資料梳理和整合，轉換為統一格式的資料，並進行高速的全文檢索、彈性的關鍵字搜索功能、過濾、統計、可視化等分析工作，使得日誌數據的價值得到最充分的挖據。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/tdF7tx8.png&quot; alt=&quot;Imgur3&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;可視化維運&lt;/strong&gt; : BiMAP 採用 ELK stack 的 Kibana 動態儀表板設計，可以自定義多種表格、柱狀圖、餅狀圖、折線圖等不同的可視化介面，以對存儲在Elasticsearch中的數據進行深入挖掘分析與視覺化，更能幫助運維團隊提升了工作效率; 讓維運團隊可以在系統發生問題的時候，可以更快速的辨認錯誤，更有效率的解決問題。。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/D8Vvc84.png&quot; alt=&quot;Imgur4&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;系統效能維運&lt;/strong&gt; : 通過不同資源的效能log，進行多系統之間的橫向關聯分析，和不同設備資源(如主機伺服器、存儲系統、資料庫、網路、應用軟體) 的關鍵指標縱向的交叉比對分析，以制定應用系統的效能模型，除可以快速定位出系統運行緩慢的真正原因外，並可以提前排除事先發掘的系統隱患，提供高效穩定的運行環境。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/bGySN8e.png&quot; alt=&quot;predict&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;異常預警檢測&lt;/strong&gt; : 在傳統的運維模式下，由於IT系統的複雜性和關聯性，IT異常在最初發生時，往往並不影響業務的實際運作，在資料增長及系統變更後，才導致業務的異常. BiMAP維運大數據分析，能敏銳地察覺任何IT層面出現的異動，分析過往的歷史日誌，在隱患沒有產生異常前，提前的反饋至相關運維人員，提前排除異常，降低被動救火次數。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/AGqI9xG.png&quot; alt=&quot;Charts&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;關鍵指標趨勢統計報表&lt;/strong&gt;: BiMAP深入挖掘IT系統運行信息歷史數據，針對應用系統關鍵指標(KPI)進行篩選，可定期分析篩選後關鍵指標的資料模型、發展趨勢並出具系統健康檢查報告，為系統維護、擴容、管理提供科學決策依據，落實主動運維、降低系統運行風險.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;DevOps顧問諮詢&lt;/strong&gt; : 會同各種不同領域的DevOps專家，協同進行排查問題， 持續追蹤系統隱患、並製作不同時段的維運報表，以驗證持續改善成效和提供系統風險控制的建議方案。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/nJW1lex.png&quot; alt=&quot;DevOps&quot; /&gt;&lt;/p&gt;
+
 </description>
         <pubDate>Sat, 26 Apr 2014 00:54:46 +0800</pubDate>
-        <link>http://yourdomain.com/project/your-project-name</link>
-        <guid isPermaLink="true">http://yourdomain.com/project/your-project-name</guid>
+        <link>http://yourdomain.com/project/iPOC-brief</link>
+        <guid isPermaLink="true">http://yourdomain.com/project/iPOC-brief</guid>
         
         
         <category>project</category>
@@ -456,16 +493,53 @@ It was popularised in the 1960s with the release of Letraset sheets containing L
       </item>
     
       <item>
-        <title>Project: YOUR PROJECT NAME</title>
-        <description>&lt;p&gt;####YOUR PROJECT NAME
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.&lt;/p&gt;
+        <title>Project: ELK 產品簡介</title>
+        <description>&lt;h3 id=&quot;section&quot;&gt;系統特點說明&lt;/h3&gt;
 
-&lt;p&gt;####Our Proposal
-It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Log集中管理&lt;/strong&gt;:日誌分析是排除系統故障最常用的手段。通過BiMAP 維運分析系統收集核心應用運行過程中所產生的日誌，包含主機伺服器、存儲系統、資料庫、網路、應用軟體等日誌。通過這些數量巨大、結構複雜、類型眾多Log的集中管理，除了協助系統維運以及除錯外，更可以提供 IT 人員未來執行系統優化和擴容計畫時的確切可行方向。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Log檢索分析&lt;/strong&gt;: 利用BigData 分析技術，將集中的所有資料屬性、內容迥異的結構化和非結構化log，進行資料梳理和整合，轉換為統一格式的資料，並進行高速的全文檢索、彈性的關鍵字搜索功能、過濾、統計、可視化等分析工作，使得日誌數據的價值得到最充分的挖據。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/tdF7tx8.png&quot; alt=&quot;Imgur3&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;可視化維運&lt;/strong&gt; : BiMAP 採用 ELK stack 的 Kibana 動態儀表板設計，可以自定義多種表格、柱狀圖、餅狀圖、折線圖等不同的可視化介面，以對存儲在Elasticsearch中的數據進行深入挖掘分析與視覺化，更能幫助運維團隊提升了工作效率; 讓維運團隊可以在系統發生問題的時候，可以更快速的辨認錯誤，更有效率的解決問題。。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/D8Vvc84.png&quot; alt=&quot;Imgur4&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;系統效能維運&lt;/strong&gt; : 通過不同資源的效能log，進行多系統之間的橫向關聯分析，和不同設備資源(如主機伺服器、存儲系統、資料庫、網路、應用軟體) 的關鍵指標縱向的交叉比對分析，以制定應用系統的效能模型，除可以快速定位出系統運行緩慢的真正原因外，並可以提前排除事先發掘的系統隱患，提供高效穩定的運行環境。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/bGySN8e.png&quot; alt=&quot;predict&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;異常預警檢測&lt;/strong&gt; : 在傳統的運維模式下，由於IT系統的複雜性和關聯性，IT異常在最初發生時，往往並不影響業務的實際運作，在資料增長及系統變更後，才導致業務的異常. BiMAP維運大數據分析，能敏銳地察覺任何IT層面出現的異動，分析過往的歷史日誌，在隱患沒有產生異常前，提前的反饋至相關運維人員，提前排除異常，降低被動救火次數。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/AGqI9xG.png&quot; alt=&quot;Charts&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;關鍵指標趨勢統計報表&lt;/strong&gt;: BiMAP深入挖掘IT系統運行信息歷史數據，針對應用系統關鍵指標(KPI)進行篩選，可定期分析篩選後關鍵指標的資料模型、發展趨勢並出具系統健康檢查報告，為系統維護、擴容、管理提供科學決策依據，落實主動運維、降低系統運行風險.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;DevOps顧問諮詢&lt;/strong&gt; : 會同各種不同領域的DevOps專家，協同進行排查問題， 持續追蹤系統隱患、並製作不同時段的維運報表，以驗證持續改善成效和提供系統風險控制的建議方案。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/nJW1lex.png&quot; alt=&quot;DevOps&quot; /&gt;&lt;/p&gt;
+
 </description>
         <pubDate>Sat, 26 Apr 2014 00:54:46 +0800</pubDate>
-        <link>http://yourdomain.com/project/your-project-name</link>
-        <guid isPermaLink="true">http://yourdomain.com/project/your-project-name</guid>
+        <link>http://yourdomain.com/project/ELK-brief</link>
+        <guid isPermaLink="true">http://yourdomain.com/project/ELK-brief</guid>
         
         
         <category>project</category>
